@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/upcomingRemindersFragment">
+
+    <fragment
+        android:id="@+id/upcomingRemindersFragment"
+        android:name="com.example.android.forget_it_v0.UpcomingRemindersFragment"
+        android:label="fragment_upcoming_reminders"
+        tools:layout="@layout/fragment_upcoming_reminders" >
+        <action
+            android:id="@+id/action_upcomingRemindersFragment_to_sendRemindersFragment"
+            app:destination="@id/sendRemindersFragment" />
+        <action
+            android:id="@+id/action_upcomingRemindersFragment_to_pendingRemindersFragment"
+            app:destination="@id/pendingRemindersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pendingRemindersFragment"
+        android:name="com.example.android.forget_it_v0.PendingRemindersFragment"
+        android:label="fragment_pending_reminders"
+        tools:layout="@layout/fragment_pending_reminders" />
+    <fragment
+        android:id="@+id/sendRemindersFragment"
+        android:name="com.example.android.forget_it_v0.SendRemindersFragment"
+        android:label="fragment_send_reminders"
+        tools:layout="@layout/fragment_send_reminders" >
+        <action
+            android:id="@+id/action_sendRemindersFragment_to_createReminderFragment"
+            app:destination="@id/createReminderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createReminderFragment"
+        android:name="com.example.android.forget_it_v0.CreateReminderFragment"
+        android:label="CreateReminderFragment" >
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="number"
+            app:argType="string" />
+        <argument
+            android:name="buttonText"
+            app:argType="string" />
+    </fragment>
+</navigation>

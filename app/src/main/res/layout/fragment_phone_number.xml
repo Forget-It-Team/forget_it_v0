@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".PhoneNumberFragment">
+
+        <ImageView
+            android:id="@+id/logo1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/samplelogo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logo1"
+            android:text="Forget'it"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/montserrat_regular"
+            android:textSize="40dp"
+            android:id="@+id/logoText1" />
+
+        <TextView
+            android:id="@+id/origin1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/enterPhoneNumbertv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter your phone number"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_above="@id/origin1"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:gravity="center_horizontal" />
+
+        <EditText
+            android:id="@+id/phoneNumberET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/origin1"
+            android:layout_marginHorizontal="20dp"
+            android:layout_margin="20dp"/>
+
+        <Button
+            android:id="@+id/sendOtpBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phoneNumberET"
+            android:layout_centerHorizontal="true"
+            android:text="Send OTP"
+            android:layout_marginTop="10dp" />
+
+
+    </RelativeLayout>
+</layout>

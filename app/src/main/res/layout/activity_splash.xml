@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".splashActivity">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/samplelogo"
+            android:layout_above="@id/origin"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/origin"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/logoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forget'it"
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_regular"
+            android:textSize="40dp"
+            android:textColor="#072337"
+            android:layout_below="@id/origin"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+</layout>
