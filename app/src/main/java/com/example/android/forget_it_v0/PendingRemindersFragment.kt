@@ -73,6 +73,8 @@ class PendingRemindersFragment : Fragment() , RecyclerViewOnClickPending {
         initLayout()
         initRV()
         contacts()
+
+        auth = Firebase.auth
         return binding.root
     }
 
@@ -156,6 +158,7 @@ class PendingRemindersFragment : Fragment() , RecyclerViewOnClickPending {
     }
 
     private fun initLayout() {
+        auth = Firebase.auth
         number = auth.currentUser!!.phoneNumber!!.subSequence(3, 13).toString()
 
         rejectDialog = Dialog(requireActivity())

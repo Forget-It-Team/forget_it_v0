@@ -2,7 +2,6 @@ package com.example.android.forget_it_v0
 
 import android.Manifest
 import android.app.Dialog
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -10,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RatingBar
@@ -18,9 +16,9 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.forget_it_v0.adapter.UpcomingAdapter
-import com.example.android.forget_it_v0.databinding.FragmentOtpBinding
 import com.example.android.forget_it_v0.databinding.FragmentUpcomingRemindersBinding
 import com.example.android.forget_it_v0.models.*
 import com.example.android.forget_it_v0.repository.FirestoreRepo
@@ -29,6 +27,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.synnapps.carouselview.CarouselView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -37,8 +36,6 @@ import java.time.Month
 import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
-
-
 
 
 @Suppress("DEPRECATION")
@@ -65,6 +62,15 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
     //    private var number : String = "9307829766"
     private var auth: FirebaseAuth = Firebase.auth
     private var  phone = auth.currentUser!!.phoneNumber
+    var carouselView: CarouselView? = null
+
+    var sampleImages = intArrayOf(
+        R.drawable.one,
+        R.drawable.two,
+        R.drawable.three,
+        R.drawable.four,
+        R.drawable.five
+    )
 
     private lateinit var binding: FragmentUpcomingRemindersBinding
     @RequiresApi(Build.VERSION_CODES.O)
@@ -91,22 +97,34 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_upcoming_reminders,container,false)
 
+        binding.carouselView.pageCount = sampleImages.size
+        binding.carouselView.setImageListener { position, imageView ->
+            imageView.setImageResource(sampleImages[position])}
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         FirebaseMessaging.getInstance().subscribeToTopic("all")
         val sub_phone = phone!!.subSequence(3, 13)
         FirebaseMessaging.getInstance().subscribeToTopic(sub_phone as String)
+
+
 
 
         requestContactPermission()
         initView()
         initRV()
         daysInstalled()
+
+
+
     }
+
+
 
     private fun daysInstalled() {
         val installed = Date(requireActivity().packageManager.getPackageInfo(requireActivity().packageName, 0).firstInstallTime)
