@@ -1,4 +1,4 @@
-package com.example.android.forget_it_v0
+package com.example.android.forget_it_v0.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

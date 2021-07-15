@@ -1,11 +1,14 @@
 package com.example.android.forget_it_v0
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
@@ -14,6 +17,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +27,7 @@ import com.example.android.forget_it_v0.databinding.FragmentSendRemindersBinding
 import com.example.android.forget_it_v0.models.Contact
 import com.example.android.forget_it_v0.models.RecyclerViewOnClickContact
 import com.example.android.forget_it_v0.models.toast
-import com.example.forgetit.model.UploadContactList
+import com.example.android.forget_it_v0.models.UploadContactList
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -32,11 +37,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-
+@Suppress("DEPRECATION")
 class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
 
     private var number: String = Firebase.auth.currentUser!!.phoneNumber!!.subSequence(3, 13).toString()
     //list of people using the app
+    private val PERMISSIONS_REQUEST_READ_CONTACTS = 1
     private var myList: ArrayList<String> = arrayListOf()
     private var contacts : HashMap<String, String> = HashMap()
     private lateinit var binding : FragmentSendRemindersBinding
@@ -58,17 +64,17 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_send_reminders,container,false)
-        return inflater.inflate(R.layout.fragment_send_reminders, container, false)
+        requestContactPermission()
+        initRV()
+        getNumbersUsingApp()
+        return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        initRV()
-        getNumbersUsingApp()
 
         binding.contactFilter.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -107,6 +113,54 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
         editor.putString("contact list", json)
         editor.apply()
 //        upload_contacts()
+    }
+
+
+    private fun requestContactPermission() {
+        GlobalScope.launch(Dispatchers.Main) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.READ_CONTACTS
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            requireActivity(),
+                            Manifest.permission.READ_CONTACTS
+                        )
+                    ) {
+                        val builder: android.app.AlertDialog.Builder =
+                            android.app.AlertDialog.Builder(requireContext())
+                        builder.setTitle("Read Contacts permission")
+                        builder.setPositiveButton(android.R.string.ok, null)
+                        builder.setMessage("Please enable access to contacts.")
+                        builder.setOnDismissListener {
+                            requestPermissions(
+                                arrayOf(Manifest.permission.READ_CONTACTS),
+                                PERMISSIONS_REQUEST_READ_CONTACTS
+                            )
+                        }
+                        builder.show()
+                    } else {
+                        ActivityCompat.requestPermissions(
+                            requireActivity(), arrayOf(Manifest.permission.READ_CONTACTS),
+                            PERMISSIONS_REQUEST_READ_CONTACTS
+                        )
+                    }
+                } else {
+//                    home_constraint.visibility = View.VISIBLE
+//                    home_warning.visibility = View.GONE
+//                    home_rv.visibility = View.VISIBLE
+//                    home_upcoming_text.visibility = View.VISIBLE
+                }
+            } else {
+                requireActivity().toast("Permission to read contacts has been granted")
+//                home_constraint.visibility = View.VISIBLE
+//                home_warning.visibility = View.GONE
+//                home_rv.visibility = View.VISIBLE
+//                home_upcoming_text.visibility = View.VISIBLE
+            }
+        }
     }
 
 
@@ -189,8 +243,7 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
 //            contactList.add(myselfContact)
             contactList.addAll(listHaving)
             contactList.addAll(listNotHaving)
-            requireActivity().toast(contactList.toString())
-            contactAdapter.update(contactList)
+            contactAdapter.notifyDataSetChanged()
             Firebase.firestore.collection("Contacts").document(number).set(UploadContactList(contacts))
             writeSharedPref()
 

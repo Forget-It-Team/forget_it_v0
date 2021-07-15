@@ -1,4 +1,4 @@
-package com.example.forgetit.model
+package com.example.android.forget_it_v0.models
 
 import android.R
 import android.annotation.TargetApi

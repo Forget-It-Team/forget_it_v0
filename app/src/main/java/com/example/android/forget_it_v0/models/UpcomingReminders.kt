@@ -1,11 +1,13 @@
-package com.example.forgetit.model
+package com.example.android.forget_it_v0.models
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
 import java.time.Month
 
-data class UpcomingReminders @RequiresApi(Build.VERSION_CODES.O) constructor(
+
+@RequiresApi(Build.VERSION_CODES.O)
+data class UpcomingReminders(
     var name : String = "",
     var from : String = "",
     var reminder : String = "",

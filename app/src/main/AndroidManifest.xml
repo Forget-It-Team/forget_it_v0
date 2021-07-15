@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ForgetitV0">
-        <activity android:name=".ReportActivity"></activity>
+
+        <activity android:name=".ReportActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".AuthenticationActivity" />
         <activity android:name=".splashActivity">
@@ -24,6 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".models.MyAlarm"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
+import com.example.android.forget_it_v0.adapter.ViewPagerAdapter
 import com.example.android.forget_it_v0.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

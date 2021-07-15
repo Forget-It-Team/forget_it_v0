@@ -1,11 +1,10 @@
-package com.example.forgetit.model
+package com.example.android.forget_it_v0.models
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
 import android.util.Log
-import com.example.android.forget_it_v0.models.AudioPlayer
 
 class MyAlarm : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
