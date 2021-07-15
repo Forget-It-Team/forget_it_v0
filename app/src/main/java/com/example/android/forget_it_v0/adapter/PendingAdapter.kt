@@ -12,8 +12,9 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.forget_it_v0.R
 import com.example.android.forget_it_v0.models.Pending
+import com.example.android.forget_it_v0.models.RecyclerViewOnClickPending
 
-class PendingAdapter(var list: ArrayList<Pending>) :
+class PendingAdapter(var list: ArrayList<Pending>, var listener : RecyclerViewOnClickPending) :
     RecyclerView.Adapter<PendingAdapter.PendingViewHolder>() {
     inner class PendingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var name: TextView = itemView.findViewById(R.id.pending_rv_name)
@@ -53,12 +54,12 @@ class PendingAdapter(var list: ArrayList<Pending>) :
         holder.populate(item)
 
         holder.btnA.setOnClickListener {
-///Problemmmm
+            listener.onClick(holder.btnA, list[position])
         }
 
 
         holder.btnR.setOnClickListener {
-
+            listener.onClick(holder.btnR, list[position])
         }
 
     }

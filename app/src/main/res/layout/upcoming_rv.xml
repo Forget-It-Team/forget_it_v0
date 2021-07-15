@@ -59,12 +59,14 @@
             android:orientation="horizontal"
             android:layout_weight="1.5">
             <Button
+                android:id="@+id/rv_markDone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Mark done"
                 android:layout_weight="1"
                 android:layout_margin="20dp"/>
             <Button
+                android:id="@+id/rv_delete"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Delete"

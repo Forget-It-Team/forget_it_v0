@@ -22,10 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.forget_it_v0.adapter.UpcomingAdapter
 import com.example.android.forget_it_v0.databinding.FragmentOtpBinding
 import com.example.android.forget_it_v0.databinding.FragmentUpcomingRemindersBinding
-import com.example.android.forget_it_v0.models.AudioPlayer
-import com.example.android.forget_it_v0.models.Feedback_Model
-import com.example.android.forget_it_v0.models.Pending
-import com.example.android.forget_it_v0.models.toast
+import com.example.android.forget_it_v0.models.*
 import com.example.android.forget_it_v0.repository.FirestoreRepo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -41,10 +38,14 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class UpcomingRemindersFragment : Fragment() {
+
+
+
+@Suppress("DEPRECATION")
+class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
     private var size: Int = 0
     private val PERMISSIONS_REQUEST_READ_CONTACTS = 1
-    private var upcomingReminderAdapter = UpcomingAdapter(arrayListOf<Pending>())
+    private var upcomingReminderAdapter = UpcomingAdapter(arrayListOf<Pending>(), this)
     private lateinit var upcomingDialog: Dialog
     private lateinit var deadlineDialog: Dialog
     private lateinit var dialogCompleted: Button
@@ -105,20 +106,6 @@ class UpcomingRemindersFragment : Fragment() {
         initView()
         initRV()
         daysInstalled()
-        Firebase.firestore
-            .collection("Contacts")
-            .document(number)
-            .get()
-            .addOnCompleteListener {
-                if(it.isSuccessful){
-                    val document = it.getResult()
-                    if(document != null && document.exists()){
-                        requireActivity().toast(document.get("list").toString())
-                    }
-                }
-            }
-
-
     }
 
     private fun daysInstalled() {
@@ -406,89 +393,6 @@ class UpcomingRemindersFragment : Fragment() {
     }
 
 
-
-//    override fun onClick(v: View, pending: Pending) {
-//        if (pending.pastDeadline) {
-//            if(v.id == R.id.rv_mark_as_done) {
-//                onYes(pending)
-//            }else {
-//                onNo(pending)
-//            }
-//        } else {
-//            if(v.id == R.id.rv_mark_as_done) {
-//                onCompleted(pending)
-//            }else {
-//                onDelete(pending)
-//            }
-//        }
-//    }
-
-//    private fun onYes(pending: Pending) {
-//        progressShow()
-//        FirestoreRepo.swapData("Accepted", "Completed", pending.from, number, pending)
-//        if(AudioPlayer.isPlaying()) {
-//            AudioPlayer.stopAudio()
-//        }
-//        progressHide()
-//        requireActivity().toast("You have completed requireActivity() reminder. Congrats!")
-//
-//        list.remove(pending)
-//        upcomingReminderAdapter.updateList(list)
-//        deadlineDialog.dismiss()
-//    }
-//
-//    private fun onNo(pending: Pending) {
-//        progressShow()
-//        FirestoreRepo.swapData("Accepted", "Incomplete", pending.from, number, pending)
-//        progressHide()
-//        if(AudioPlayer.isPlaying()) {
-//            AudioPlayer.stopAudio()
-//        }
-//        requireActivity().toast("You have not completed requireActivity() task. Better luck next time!")
-//
-//        list.remove(pending)
-//        upcomingReminderAdapter.updateList(list)
-//        deadlineDialog.dismiss()
-//    }
-//
-//    private fun onDelete(pending: Pending) {
-//        progressShow()
-//        FirestoreRepo.swapData("Accepted", "Deleted", pending.from, number, pending)
-//        progressHide()
-//
-//        requireActivity().toast("You have deleted requireActivity() task. Better luck next time!")
-//
-//        list.remove(pending)
-//        upcomingReminderAdapter.updateList(list)
-//        upcomingDialog.dismiss()
-//    }
-//
-//    private fun onCompleted(pending: Pending) {
-//        progressShow()
-//        FirestoreRepo.swapData("Accepted", "Completed", pending.from, number, pending)
-//        progressHide()
-//
-//        requireActivity().toast("You have completed requireActivity() task. Well done!")
-//
-//        list.remove(pending)
-//        upcomingReminderAdapter.updateList(list)
-//        upcomingDialog.dismiss()
-//    }
-//
-//    private fun onPendingImageClicked() {
-//        val intent = Intent(requireActivity(), PendingActivity::class.java)
-//        intent.putExtra("number", number)
-//        startActivity(intent)
-//        progressShow()
-//    }
-//
-//    private fun onSendImageClicked() {
-//        val intent = Intent(requireActivity(), ContactsActivity::class.java)
-//        intent.putExtra("number", number)
-//        startActivity(intent)
-//        progressShow()
-//    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun addToList() {
 
@@ -613,6 +517,75 @@ class UpcomingRemindersFragment : Fragment() {
                 }
             }
         }
+    }
+
+
+    override fun onClick(v: View, pending: Pending) {
+        if (pending.pastDeadline) {
+            if(v.id == R.id.rv_markDone) {
+                onYes(pending)
+            }else {
+                onNo(pending)
+            }
+        } else {
+            if(v.id == R.id.rv_markDone) {
+                onCompleted(pending)
+            }else {
+                onDelete(pending)
+            }
+        }
+    }
+
+    private fun onYes(pending: Pending) {
+        progressShow()
+        FirestoreRepo.swapData("Accepted", "Completed", pending.from, number, pending)
+        if(AudioPlayer.isPlaying()) {
+            AudioPlayer.stopAudio()
+        }
+        progressHide()
+        requireActivity().toast("You have completed this reminder. Congrats!")
+
+        list.remove(pending)
+        upcomingReminderAdapter.updateList(list)
+        deadlineDialog.dismiss()
+    }
+
+    private fun onNo(pending: Pending) {
+        progressShow()
+        FirestoreRepo.swapData("Accepted", "Incomplete", pending.from, number, pending)
+        progressHide()
+        if(AudioPlayer.isPlaying()) {
+            AudioPlayer.stopAudio()
+        }
+        requireActivity().toast("You have not completed this task. Better luck next time!")
+
+        list.remove(pending)
+        upcomingReminderAdapter.updateList(list)
+        deadlineDialog.dismiss()
+    }
+
+    private fun onDelete(pending: Pending) {
+        progressShow()
+        FirestoreRepo.swapData("Accepted", "Deleted", pending.from, number, pending)
+        progressHide()
+
+        requireActivity().toast("You have deleted this task. Better luck next time!")
+
+        list.remove(pending)
+        upcomingReminderAdapter.updateList(list)
+        upcomingDialog.dismiss()
+    }
+
+    private fun onCompleted(pending: Pending) {
+        progressShow()
+        FirestoreRepo.swapData("Accepted", "Completed", pending.from, number, pending)
+        progressHide()
+
+        requireActivity().toast("You have completed this task. Well done!")
+
+        list.remove(pending)
+        upcomingReminderAdapter.updateList(list)
+        upcomingDialog.dismiss()
     }
 
 
