@@ -12,15 +12,14 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.forget_it_v0.adapter.PendingAdapter
 import com.example.android.forget_it_v0.databinding.FragmentPendingRemindersBinding
@@ -28,8 +27,9 @@ import com.example.android.forget_it_v0.models.Pending
 import com.example.android.forget_it_v0.models.RecyclerViewOnClickPending
 import com.example.android.forget_it_v0.models.toast
 import com.example.android.forget_it_v0.repository.FirestoreRepo
-import com.example.forgetit.model.MyAlarm
+import com.example.android.forget_it_v0.models.MyAlarm
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
@@ -45,7 +45,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-class PendingRemindersFragment : Fragment() , RecyclerViewOnClickPending{
+class PendingRemindersFragment : Fragment() , RecyclerViewOnClickPending {
 
     private var alarmCount: Int = 0
     private lateinit var pendingAdapter: PendingAdapter
@@ -57,7 +57,7 @@ class PendingRemindersFragment : Fragment() , RecyclerViewOnClickPending{
     private lateinit var id: String
     private var hashMap: HashMap<String, String> = HashMap()
     private lateinit var sharedPref: SharedPreferences
-    private lateinit var auth : FirebaseAuth
+    private var auth : FirebaseAuth = Firebase.auth
     private lateinit var photo: Bitmap
     private lateinit var binding : FragmentPendingRemindersBinding
 

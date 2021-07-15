@@ -24,8 +24,6 @@ class PendingAdapter(var list: ArrayList<Pending>, var listener : RecyclerViewOn
         var btnA: Button = itemView.findViewById(R.id.pending_rv_accept)
         var btnR: Button = itemView.findViewById(R.id.pending_rv_reject)
 
-        var progress_circular : ProgressBar = itemView.findViewById(R.id.progress_circular)
-
         fun populate(pending: Pending) {
             name.text = pending.name
             task.text = pending.task
