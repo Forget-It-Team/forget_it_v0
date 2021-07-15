@@ -253,7 +253,7 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
 
     override fun onClick(text: String, contact: Contact) {
         if (text.equals("Set a Reminder")) {
-            view?.findNavController()?.navigate(SendRemindersFragmentDirections.actionSendRemindersFragmentToCreateReminderFragment(contact.name,contact.number,contact.buttonText))
+            view?.findNavController()?.navigate(SendRemindersFragmentDirections.actionSendRemindersFragmentToCreateReminderFragment(contact.name,contact.number,number))
 //            val intent: Intent = Intent(this, CreateReminderActivity::class.java)
 //            intent.putExtra("name", contact.name)
 //            intent.putExtra("number", contact.number)

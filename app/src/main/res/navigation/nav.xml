@@ -41,8 +41,11 @@
         <argument
             android:name="number"
             app:argType="string" />
+        <action
+            android:id="@+id/action_createReminderFragment_to_upcomingRemindersFragment"
+            app:destination="@id/upcomingRemindersFragment" />
         <argument
-            android:name="buttonText"
+            android:name="myNumber"
             app:argType="string" />
     </fragment>
 </navigation>

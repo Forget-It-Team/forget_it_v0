@@ -15,6 +15,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ForgetitV0">
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_baseline_campaign_24" />
+
+        <service
+            android:name=".FirebaseCloudMessaging"
+            android:exported="false"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
         <activity android:name=".ReportActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".AuthenticationActivity" />
