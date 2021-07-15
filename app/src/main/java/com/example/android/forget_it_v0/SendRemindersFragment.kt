@@ -1,59 +1,219 @@
 package com.example.android.forget_it_v0
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android.forget_it_v0.adapter.ContactAdapter
+import com.example.android.forget_it_v0.databinding.FragmentSendRemindersBinding
+import com.example.android.forget_it_v0.models.Contact
+import com.example.android.forget_it_v0.models.RecyclerViewOnClickContact
+import com.example.android.forget_it_v0.models.toast
+import com.example.forgetit.model.UploadContactList
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SendRemindersFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SendRemindersFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var number: String = Firebase.auth.currentUser!!.phoneNumber!!.subSequence(3, 13).toString()
+    //list of people using the app
+    private var myList: ArrayList<String> = arrayListOf()
+    private var contacts : HashMap<String, String> = HashMap()
+    private lateinit var binding : FragmentSendRemindersBinding
+    //to prevent repeated numbers from being added. Holds unique numbers
+//    private var numbersStored: ArrayList<String> = arrayListOf()
+    private lateinit var contactAdapter: ContactAdapter
+
+    //the final list, which is sent to the RV adapter
+    private var contactList: ArrayList<Contact> = arrayListOf()
+    private var listHaving: ArrayList<Contact> = arrayListOf()
+    private var listNotHaving: ArrayList<Contact> = arrayListOf()
+    private lateinit var contact: Contact
+    private lateinit var id: String
+    private lateinit var photo: Bitmap
+
+    private var hashMap: HashMap<String, String> = hashMapOf()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_send_reminders,container,false)
         return inflater.inflate(R.layout.fragment_send_reminders, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SendRemindersFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SendRemindersFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        initRV()
+        getNumbersUsingApp()
+
+        binding.contactFilter.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                contactAdapter.filter.filter(newText)
+                return false
+            }
+        })
+    }
+
+    private fun getNumbersUsingApp() {
+        val firestoreContacts = Firebase.firestore.collection("Existing users")
+
+        firestoreContacts.get()
+            .addOnSuccessListener { numbers ->
+                for (number in numbers)
+                    myList.add(number.getString("number")!!)
+                getContacts()
+//                loadSharedPref()
             }
     }
+
+    private fun writeSharedPref() {
+        val sharedPreferences: SharedPreferences =
+            requireActivity().getSharedPreferences("contacts", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        val gson: Gson = Gson()
+        val json: String = gson.toJson(contactList)
+        Log.i("Contact", "Inside write")
+
+        Log.i("COntact", json)
+        editor.putString("contact list", json)
+        editor.apply()
+//        upload_contacts()
+    }
+
+
+    private fun upload_contacts(){
+//        Firebase.firestore.collection(number).document("Contacts").add(contactList)
+    }
+
+    private fun loadSharedPref() {
+        val sharedPreferences: SharedPreferences =
+            requireActivity().getSharedPreferences("contacts", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json: String? = sharedPreferences.getString("contact list", null)
+        val type = object : TypeToken<List<Contact?>?>() {}.type
+
+        if (json == null)
+            getContacts()
+        else {
+            Log.i("Contact", json)
+            contactList = gson.fromJson(json, type)
+            Log.i("Contact", "Deep inside load Shared")
+
+            Log.i("Contact", contactList.toString())
+            contactAdapter.update(contactList)
+            binding.progressCircular.visibility = View.GONE
+        }
+
+
+    }
+
+    private fun initRV() {
+        binding.progressCircular.visibility = View.VISIBLE
+        contactAdapter = ContactAdapter(contactList, this)
+        binding.contactsRv.layoutManager = LinearLayoutManager(requireActivity())
+        binding.contactsRv.adapter = contactAdapter
+    }
+
+
+    private fun getContacts(){
+        GlobalScope.launch(Dispatchers.Main) {
+            photo = BitmapFactory.decodeResource(
+                requireActivity().resources,
+                R.drawable.person
+            )
+            val cursor = requireActivity().contentResolver.query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+            )
+            while (cursor?.moveToNext() == true) {
+                val name: String =
+                    cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+                var phoneNo: String =
+                    cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+
+                Log.d("contact", "$name  $phoneNo")
+                phoneNo = phoneNo.replace(" ", "")
+                phoneNo = phoneNo.replace("+91", "")
+                if (!hashMap.containsKey(phoneNo)) {
+                    if (myList.contains(phoneNo)) {
+                        contact = Contact(name, phoneNo, "Set a Reminder", photo)
+//                        val con = UploadContacts(name, phoneNo)
+
+                        contacts[phoneNo] = name
+                        listHaving.add(contact)
+                    } else {
+                        contact = Contact(name, phoneNo, "Invite", photo)
+//                        val con = UploadContacts(name, phoneNo)
+                        contacts[phoneNo] = name
+                        listNotHaving.add(contact)
+                    }
+                    hashMap[phoneNo] = name
+                }
+            }
+            contactList.clear()
+//            val myselfContact = Contact(
+//                "Myself!", number, "Set a Reminder", photo
+//            )
+//            contactList.add(myselfContact)
+            contactList.addAll(listHaving)
+            contactList.addAll(listNotHaving)
+            requireActivity().toast(contactList.toString())
+            contactAdapter.update(contactList)
+            Firebase.firestore.collection("Contacts").document(number).set(UploadContactList(contacts))
+            writeSharedPref()
+
+            binding.progressCircular.visibility = View.GONE
+        }
+    }
+
+    override fun onClick(text: String, contact: Contact) {
+        if (text.equals("Set a Reminder")) {
+            view?.findNavController()?.navigate(SendRemindersFragmentDirections.actionSendRemindersFragmentToCreateReminderFragment(contact.name,contact.number,contact.buttonText))
+//            val intent: Intent = Intent(this, CreateReminderActivity::class.java)
+//            intent.putExtra("name", contact.name)
+//            intent.putExtra("number", contact.number)
+//            intent.putExtra("myNumber", number)
+//            startActivity(intent)
+//            finish()
+        }else{
+            val uri = Uri.parse("smsto:${contact.number}")
+            val intent = Intent(Intent.ACTION_SENDTO, uri)
+            intent.putExtra("sms_body", "Check out forget'it app, to make sure you don't forget anything." +
+                    "Get it free at.....")
+            requireActivity().startActivity(intent)
+        }
+    }
+
 }

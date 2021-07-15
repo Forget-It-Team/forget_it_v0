@@ -16,8 +16,9 @@ import com.example.android.forget_it_v0.PhoneNumberFragmentDirections
 import com.example.android.forget_it_v0.R
 import com.example.android.forget_it_v0.SendRemindersFragmentDirections
 import com.example.android.forget_it_v0.models.Contact
+import com.example.android.forget_it_v0.models.RecyclerViewOnClickContact
 
-class ContactAdapter(var list : ArrayList<Contact>,var view: View) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>(),
+class ContactAdapter(var list : ArrayList<Contact>,var listener : RecyclerViewOnClickContact) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>(),
     Filterable {
 
     var listFull : ArrayList<Contact> = arrayListOf()
@@ -42,7 +43,6 @@ class ContactAdapter(var list : ArrayList<Contact>,var view: View) : RecyclerVie
 
             if(button.text.toString() == "Set a Reminder"){
                 button.visibility = View.VISIBLE
-                button.setBackgroundColor(Color.parseColor("#020894"))
             }
 
             else {
@@ -69,9 +69,10 @@ class ContactAdapter(var list : ArrayList<Contact>,var view: View) : RecyclerVie
         holder.populate(item)
 
         holder.button.setOnClickListener{
-            if(holder.button.text.toString() == "Set a Reminder"){
-                view?.findNavController()?.navigate(SendRemindersFragmentDirections.actionSendRemindersFragmentToCreateReminderFragment(item.name,item.number,item.buttonText))
-            }
+            listener.onClick(holder.button.text.toString(), list[position])
+//            if(holder.button.text.toString() == "Set a Reminder"){
+////                view?.findNavController()?.navigate(SendRemindersFragmentDirections.actionSendRemindersFragmentToCreateReminderFragment(item.name,item.number,item.buttonText))
+//            }
         }
     }
 
