@@ -76,6 +76,12 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        binding.setPersonalReminder.setOnClickListener {
+            view?.findNavController()?.navigate(SendRemindersFragmentDirections.actionSendRemindersFragmentToCreateReminderFragment("MySelf!",number,number))
+        }
+
+
+
         binding.contactFilter.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

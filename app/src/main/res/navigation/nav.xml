@@ -34,7 +34,8 @@
     <fragment
         android:id="@+id/createReminderFragment"
         android:name="com.example.android.forget_it_v0.CreateReminderFragment"
-        android:label="CreateReminderFragment" >
+        android:label="CreateReminderFragment"
+        tools:layout="@layout/fragment_create_reminder">
         <argument
             android:name="name"
             app:argType="string" />
