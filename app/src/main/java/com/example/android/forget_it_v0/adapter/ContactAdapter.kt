@@ -16,6 +16,10 @@ import com.example.android.forget_it_v0.R
 import com.example.android.forget_it_v0.SendRemindersFragmentDirections
 import com.example.android.forget_it_v0.models.Contact
 import com.example.android.forget_it_v0.models.RecyclerViewOnClickContact
+import pl.droidsonroids.gif.GifImageView
+
+import kotlin.collections.ArrayList
+import kotlin.random.Random
 
 class ContactAdapter(var list : ArrayList<Contact>,var listener : RecyclerViewOnClickContact) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>(),
     Filterable {
@@ -40,9 +44,6 @@ class ContactAdapter(var list : ArrayList<Contact>,var listener : RecyclerViewOn
             R.drawable.persongiffour,
             R.drawable.persongiffive,
             R.drawable.persongifsix,
-            R.drawable.personseven,
-            R.drawable.personeight,
-            R.drawable.personnine,
         )
         val random = Random
 
@@ -56,7 +57,7 @@ class ContactAdapter(var list : ArrayList<Contact>,var listener : RecyclerViewOn
             buttonText.text = contact.buttonText
             image.setImageResource(personGif[random.nextInt(personGif.size)])
 
-            Log.i("button", button.text.toString())
+
 
             Log.i("button", buttonText.text.toString())
 
