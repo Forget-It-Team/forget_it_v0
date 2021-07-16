@@ -41,7 +41,7 @@ class ContactAdapter(var list : ArrayList<Contact>,var listener : RecyclerViewOn
 
             Log.i("button", button.text.toString())
 
-            if(button.text.toString() == "Set a Reminder"){
+            if(button.text.toString() == "Send Reminder"){
                 button.visibility = View.VISIBLE
             }
 

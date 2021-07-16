@@ -228,7 +228,7 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
                 phoneNo = phoneNo.replace("+91", "")
                 if (!hashMap.containsKey(phoneNo)) {
                     if (myList.contains(phoneNo)) {
-                        contact = Contact(name, phoneNo, "Set a Reminder", photo)
+                        contact = Contact(name, phoneNo, "Send Reminder", photo)
 //                        val con = UploadContacts(name, phoneNo)
 
                         contacts[phoneNo] = name
@@ -258,7 +258,7 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
     }
 
     override fun onClick(text: String, contact: Contact) {
-        if (text.equals("Set a Reminder")) {
+        if (text.equals("Send Reminder")) {
             view?.findNavController()?.navigate(SendRemindersFragmentDirections.actionSendRemindersFragmentToCreateReminderFragment(contact.name,contact.number,number))
 //            val intent: Intent = Intent(this, CreateReminderActivity::class.java)
 //            intent.putExtra("name", contact.name)
