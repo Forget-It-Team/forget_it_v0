@@ -21,6 +21,8 @@ import pl.droidsonroids.gif.GifImageView
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
+
+
 class ContactAdapter(var list : ArrayList<Contact>,var listener : RecyclerViewOnClickContact) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>(),
     Filterable {
 

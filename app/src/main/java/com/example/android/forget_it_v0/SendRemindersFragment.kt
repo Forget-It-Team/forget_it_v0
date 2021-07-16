@@ -156,15 +156,15 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
                 } else {
 //                    home_constraint.visibility = View.VISIBLE
 //                    home_warning.visibility = View.GONE
-//                    home_rv.visibility = View.VISIBLE
-//                    home_upcoming_text.visibility = View.VISIBLE
+                    binding.contactsRv.visibility = View.VISIBLE
+                    binding.textviewContacts.visibility = View.VISIBLE
                 }
             } else {
                 requireActivity().toast("Permission to read contacts has been granted")
 //                home_constraint.visibility = View.VISIBLE
 //                home_warning.visibility = View.GONE
-//                home_rv.visibility = View.VISIBLE
-//                home_upcoming_text.visibility = View.VISIBLE
+                binding.contactsRv.visibility = View.VISIBLE
+                binding.textviewContacts.visibility = View.VISIBLE
             }
         }
     }
