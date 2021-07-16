@@ -320,7 +320,7 @@ class CreateReminderFragment : Fragment() {
 
 
     private fun getContactName(title: String, to: String, from: String){
-        var name :String = ""
+        var name = ""
         Firebase.firestore
             .collection("Contacts")
             .document(to)

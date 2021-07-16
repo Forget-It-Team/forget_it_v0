@@ -76,7 +76,7 @@ dependencies {
 //    Volley Library for Api calls
     implementation 'com.android.volley:volley:1.2.0'
 // gif
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.20'
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
 }

@@ -48,6 +48,9 @@
             android:id="@+id/otpET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLength="6"
+            android:textAlignment="center"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_below="@id/origin1"
             android:layout_marginHorizontal="20dp"
             android:layout_margin="20dp"/>
