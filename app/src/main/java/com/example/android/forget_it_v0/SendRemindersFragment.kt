@@ -77,7 +77,14 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         binding.setPersonalReminder.setOnClickListener {
-            view?.findNavController()?.navigate(SendRemindersFragmentDirections.actionSendRemindersFragmentToCreateReminderFragment("MySelf!",number,number))
+            val bundle= Bundle()
+            bundle.putString("name", "Myself!")
+            bundle.putString("number", number)
+            bundle.putString("myNumber", number)
+            val create_reminder_fragment = CreateReminderFragment()
+            create_reminder_fragment.arguments = bundle
+            requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment, create_reminder_fragment).commit()
+
         }
 
 
@@ -259,13 +266,23 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
 
     override fun onClick(text: String, contact: Contact) {
         if (text.equals("Send Reminder")) {
-            view?.findNavController()?.navigate(SendRemindersFragmentDirections.actionSendRemindersFragmentToCreateReminderFragment(contact.name,contact.number,number))
+//            view?.findNavController()?.navigate(SendRemindersFragmentDirections.actionSendRemindersFragmentToCreateReminderFragment(contact.name,contact.number,number))
 //            val intent: Intent = Intent(this, CreateReminderActivity::class.java)
 //            intent.putExtra("name", contact.name)
 //            intent.putExtra("number", contact.number)
 //            intent.putExtra("myNumber", number)
 //            startActivity(intent)
 //            finish()
+            val bundle = Bundle()
+            bundle.putString("name", contact.name)
+            bundle.putString("number", contact.number)
+            bundle.putString("myNumber", number)
+            val create_reminder_fragment = CreateReminderFragment()
+            create_reminder_fragment.arguments = bundle
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, create_reminder_fragment).commit()
+
+
+
         }else{
             val uri = Uri.parse("smsto:${contact.number}")
             val intent = Intent(Intent.ACTION_SENDTO, uri)

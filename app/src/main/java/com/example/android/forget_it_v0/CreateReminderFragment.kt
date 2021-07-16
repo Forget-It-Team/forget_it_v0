@@ -69,10 +69,15 @@ class CreateReminderFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val args = CreateReminderFragmentArgs.fromBundle(requireArguments())
-        name = args.name
-        number = args.number
-        myNumber = args.myNumber
+//        val args = CreateReminderFragmentArgs.fromBundle(requireArguments())
+//        name = args.name
+//        number = args.number
+//        myNumber = args.myNumber
+
+        val bundle = this.arguments
+        name = bundle?.getString("name").toString()
+        number = bundle?.getString("number").toString()
+        myNumber = bundle?.getString("myNumber").toString()
 
         initSharedPref()
 

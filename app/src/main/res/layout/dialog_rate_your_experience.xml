@@ -27,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rate now"
+            android:textColor="@color/white"
             android:backgroundTint="#11aa11"
             android:id="@+id/dialog_rate_it_now"/>
 
@@ -34,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Remind me later"
+            android:textColor="@color/white"
             android:layout_marginLeft="10dp"
             android:backgroundTint="#ff0000"
             android:id="@+id/dialog_remind_me_later"/>
