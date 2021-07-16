@@ -64,13 +64,13 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
     private var  phone = auth.currentUser!!.phoneNumber
     var carouselView: CarouselView? = null
 
-    var sampleImages = intArrayOf(
-        R.drawable.one,
-        R.drawable.two,
-        R.drawable.three,
-        R.drawable.four,
-        R.drawable.five
-    )
+//    var sampleImages = intArrayOf(
+//        R.drawable.one,
+//        R.drawable.two,
+//        R.drawable.three,
+//        R.drawable.four,
+//        R.drawable.five,
+//    )
 
     private lateinit var binding: FragmentUpcomingRemindersBinding
     @RequiresApi(Build.VERSION_CODES.O)
@@ -97,9 +97,9 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_upcoming_reminders,container,false)
 
-        binding.carouselView.pageCount = sampleImages.size
-        binding.carouselView.setImageListener { position, imageView ->
-            imageView.setImageResource(sampleImages[position])}
+//        binding.carouselView.pageCount = sampleImages.size
+//        binding.carouselView.setImageListener { position, imageView ->
+//            imageView.setImageResource(sampleImages[position])}
 
         return binding.root
     }

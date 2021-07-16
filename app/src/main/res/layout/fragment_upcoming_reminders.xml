@@ -2,20 +2,29 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <com.synnapps.carouselview.CarouselView
-            android:id="@+id/carouselView"
+<!--        <com.synnapps.carouselview.CarouselView-->
+<!--            android:id="@+id/carouselView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="150dp"-->
+<!--            app:fillColor="#FFFFFFFF"-->
+<!--            app:pageColor="#00000000"-->
+<!--            app:radius="6dp"-->
+<!--            app:slideInterval="3000"-->
+<!--            app:strokeColor="#FF777777"-->
+<!--            app:strokeWidth="1dp"/>-->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            app:fillColor="#FFFFFFFF"
-            app:pageColor="#00000000"
-            app:radius="6dp"
-            app:slideInterval="3000"
-            app:strokeColor="#FF777777"
-            app:strokeWidth="1dp"/>
+            android:layout_height="match_parent"
+            app:lottie_url="https://assets6.lottiefiles.com/packages/lf20_0sjsnpsr.json"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:visibility="gone"/>
 
 
 

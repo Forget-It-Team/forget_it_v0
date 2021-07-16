@@ -7,27 +7,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <androidx.cardview.widget.CardView
         android:id="@+id/set_personal_reminder"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="20dp"
         android:layout_height="60dp"
-        android:text="Set Personal Reminder"
-        android:background="@color/black"
-        android:textColor="@color/white"
-        android:fontFamily="@font/montserrat_regular"
-        android:textSize="22sp"
+        app:cardBackgroundColor="#072337"
+        app:cardCornerRadius="20dp"
         android:gravity="center"
         android:lineHeight="27dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp"
+        app:cardElevation="50dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Set Personal Reminder"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="20dp"/>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/textview_contacts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Contacts"
+        android:layout_margin="20dp"
         android:textColor="#828282"
         android:textSize="20sp"
         android:fontFamily="@font/montserrat_regular"
@@ -37,26 +45,32 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp" />
-
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/contact_filter"
+    <androidx.cardview.widget.CardView
+        android:layout_margin="10dp"
+        android:id="@+id/searchCard"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:textCursorDrawable="@null"
-        app:iconifiedByDefault="false"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_contacts"
+        app:cardElevation="50dp"
+        app:cardCornerRadius="20dp">
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textCursorDrawable="@null"
+        app:iconifiedByDefault="false"
         app:queryBackground="@null"
-        app:queryHint="Search Contacts" />
+        app:queryHint="Search Contacts"
+        android:id="@+id/contact_filter"/>
+    </androidx.cardview.widget.CardView>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contacts_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/contact_filter"
+        app:layout_constraintTop_toBottomOf="@id/searchCard"
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -7,54 +7,56 @@ xmlns:tools="http://schemas.android.com/tools">
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardview"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="50dp"
+        app:cardElevation="50dp"
+        android:elevation="50dp">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
             <ImageView
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/imageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/samplelogo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                android:src="@drawable/logo"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentLeft="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Forget'it"
-                android:textSize="30dp"
-                app:layout_constraintEnd_toStartOf="@+id/imageButton"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:shadowColor="#4004061A"
                 android:shadowDx="6"
                 android:shadowDy="6"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:layout_weight="5"
                 android:shadowRadius="10"
-                android:shadowColor="#4004061A"/>
+                android:text="Forget'it"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"/>
 
             <ImageButton
+                android:layout_alignParentRight="true"
                 android:id="@+id/imageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="10dp"
+                android:layout_height="50dp"
                 android:background="#FFFFFF"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_baseline_more_vert_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 
     <com.google.android.material.appbar.AppBarLayout
