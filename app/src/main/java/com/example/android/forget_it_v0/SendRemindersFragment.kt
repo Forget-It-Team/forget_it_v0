@@ -83,8 +83,13 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
             bundle.putString("myNumber", number)
             val create_reminder_fragment = CreateReminderFragment()
             create_reminder_fragment.arguments = bundle
-            requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment, create_reminder_fragment).commit()
+//            requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment, create_reminder_fragment).commit()
 
+            val intent = Intent(requireActivity(), CreateReminderActivity::class.java)
+            intent.putExtra("name", "MySelf!")
+            intent.putExtra("number", number)
+            intent.putExtra("myNumber", number)
+            requireActivity().startActivity(intent)
         }
 
 
@@ -172,6 +177,8 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
 //                home_warning.visibility = View.GONE
                 binding.contactsRv.visibility = View.VISIBLE
                 binding.textviewContacts.visibility = View.VISIBLE
+
+
             }
         }
     }
@@ -267,19 +274,18 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
     override fun onClick(text: String, contact: Contact) {
         if (text.equals("Send Reminder")) {
 //            view?.findNavController()?.navigate(SendRemindersFragmentDirections.actionSendRemindersFragmentToCreateReminderFragment(contact.name,contact.number,number))
-//            val intent: Intent = Intent(this, CreateReminderActivity::class.java)
-//            intent.putExtra("name", contact.name)
-//            intent.putExtra("number", contact.number)
-//            intent.putExtra("myNumber", number)
-//            startActivity(intent)
-//            finish()
-            val bundle = Bundle()
-            bundle.putString("name", contact.name)
-            bundle.putString("number", contact.number)
-            bundle.putString("myNumber", number)
-            val create_reminder_fragment = CreateReminderFragment()
-            create_reminder_fragment.arguments = bundle
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, create_reminder_fragment).commit()
+            val intent = Intent(requireActivity(), CreateReminderActivity::class.java)
+            intent.putExtra("name", contact.name)
+            intent.putExtra("number", contact.number)
+            intent.putExtra("myNumber", number)
+            requireActivity().startActivity(intent)
+//            val bundle = Bundle()
+//            bundle.putString("name", contact.name)
+//            bundle.putString("number", contact.number)
+//            bundle.putString("myNumber", number)
+//            val create_reminder_fragment = CreateReminderFragment()
+//            create_reminder_fragment.arguments = bundle
+//            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, create_reminder_fragment).commit()
 
 
 
