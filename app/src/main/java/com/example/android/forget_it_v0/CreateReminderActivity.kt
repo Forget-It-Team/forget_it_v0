@@ -137,7 +137,7 @@ class CreateReminderActivity : AppCompatActivity() , View.OnClickListener{
                 .document("Upcoming")
                 .collection("Pending")
 
-            val reminderFinal = reminder.title + "\n" + reminder.reminder
+            val reminderFinal = reminder.title + ";" + reminder.reminder
 
             val dataSender = hashMapOf(
                 "date" to reminder.date,

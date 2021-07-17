@@ -50,6 +50,7 @@
             android:layout_height="wrap_content"
             android:maxLength="6"
             android:textAlignment="center"
+            android:inputType="number"
             android:fontFamily="@font/montserrat_medium"
             android:layout_below="@id/origin1"
             android:layout_marginHorizontal="20dp"
