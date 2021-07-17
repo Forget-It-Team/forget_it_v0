@@ -1,6 +1,7 @@
 package com.example.android.forget_it_v0.adapter
 
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,10 @@ class PendingAdapter(var list: ArrayList<Pending>, var listener : RecyclerViewOn
 
         fun populate(pending: Pending) {
             name.text = pending.name
+            val reminder = pending.task.split(";").toTypedArray()
+            val title = reminder[0]
+            val desc = reminder[1]
+            Log.d("title", reminder.toString())
             task.text = pending.task
             image.setImageResource(personGif[random.nextInt(personGif.size)])
             date.text = pending.date.toString().replace("T", "\n").replace("-", "/")

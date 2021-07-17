@@ -53,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/origin1"
             android:maxLength="10"
+            android:inputType="phone"
             android:fontFamily="@font/montserrat_medium"
             android:textAlignment="center"
             android:layout_marginHorizontal="20dp"

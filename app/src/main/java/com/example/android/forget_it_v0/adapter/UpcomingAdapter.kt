@@ -2,6 +2,7 @@ package com.example.android.forget_it_v0.adapter
 
 import android.content.Intent
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,10 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
 
         fun populate(pending: Pending) {
             name.text = pending.name
+            val remin = pending.task.split(";").toTypedArray()
+            val title = remin[0]
+            val desc = remin[1]
+            Log.d("title", remin[0]+"+"+remin[1])
             reminder.text = pending.task
             image.setImageResource(personGif[random.nextInt(personGif.size)])
 

@@ -113,8 +113,9 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
             .addOnSuccessListener { numbers ->
                 for (number in numbers)
                     myList.add(number.getString("number")!!)
-                getContacts()
-//                loadSharedPref()
+                if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED){
+                    getContacts()
+                }
             }
     }
 
@@ -165,6 +166,7 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
                         )
                     }
                 } else {
+                    getNumbersUsingApp()
 //                    home_constraint.visibility = View.VISIBLE
 //                    home_warning.visibility = View.GONE
                     binding.contactsRv.visibility = View.VISIBLE
@@ -172,11 +174,11 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
                 }
             } else {
                 requireActivity().toast("Permission to read contacts has been granted")
+                getNumbersUsingApp()
 //                home_constraint.visibility = View.VISIBLE
 //                home_warning.visibility = View.GONE
                 binding.contactsRv.visibility = View.VISIBLE
                 binding.textviewContacts.visibility = View.VISIBLE
-                getNumbersUsingApp()
             }
         }
     }
@@ -193,7 +195,9 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
                     if (grantResults.isNotEmpty()
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     ) {
+                        Log.d("permission", "called")
                         getNumbersUsingApp()
+
 //                        home_constraint.visibility = View.VISIBLE
 //                        home_warning.visibility = View.GONE
 //                        home_rv.visibility = View.VISIBLE

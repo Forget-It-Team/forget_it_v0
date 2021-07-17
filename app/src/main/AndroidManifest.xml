@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ForgetitV0">
-        <activity android:name=".CreateReminderActivity"></activity>
+        <activity android:name=".CreateReminderActivity" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
