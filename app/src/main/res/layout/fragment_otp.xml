@@ -11,7 +11,7 @@
             android:id="@+id/logo1"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/samplelogo"
+            android:src="@drawable/logo"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp" />
 
@@ -23,7 +23,8 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/montserrat_regular"
             android:textSize="40dp"
-            android:id="@+id/logoText1" />
+            android:id="@+id/logoText1"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/origin1"

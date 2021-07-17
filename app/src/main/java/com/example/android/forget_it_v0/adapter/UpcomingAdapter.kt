@@ -59,7 +59,7 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
             val title = remin[0]
             val desc = remin[1]
             Log.d("title", remin[0]+"+"+remin[1])
-            reminder.text = pending.task
+            reminder.text = title
             image.setImageResource(personGif[random.nextInt(personGif.size)])
 
             var dateTimeText = pending.date.toString()
@@ -96,7 +96,7 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
 
 
         holder.button_markDone.setOnClickListener {
-            listener.onClick(holder.button_markDone, item)
+            listener.onClick(holder.button_markDone, item)}
 
         holder.info.setOnClickListener{
             listener.onClick(holder.info,item)
@@ -109,4 +109,4 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
         }
 //
     }
-}}
+}

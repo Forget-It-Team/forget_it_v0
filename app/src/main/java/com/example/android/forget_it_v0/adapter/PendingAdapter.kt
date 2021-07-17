@@ -51,7 +51,7 @@ class PendingAdapter(var list: ArrayList<Pending>, var listener : RecyclerViewOn
             val title = reminder[0]
             val desc = reminder[1]
             Log.d("title", reminder.toString())
-            task.text = pending.task
+            task.text = title
             image.setImageResource(personGif[random.nextInt(personGif.size)])
             date.text = pending.date.toString().replace("T", "\n").replace("-", "/")
         }

@@ -35,7 +35,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/activity_create_title_et"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:maxLength="65"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -49,7 +50,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/activity_create_description_et"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:maxLength="600"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
