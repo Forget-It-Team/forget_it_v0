@@ -1,6 +1,7 @@
 package com.example.android.forget_it_v0
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -81,8 +83,6 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
             bundle.putString("name", "Myself!")
             bundle.putString("number", number)
             bundle.putString("myNumber", number)
-            val create_reminder_fragment = CreateReminderFragment()
-            create_reminder_fragment.arguments = bundle
 //            requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment, create_reminder_fragment).commit()
 
             val intent = Intent(requireActivity(), CreateReminderActivity::class.java)
@@ -105,6 +105,17 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
                 return false
             }
         })
+    }
+
+    private fun info(){
+        val info =  Dialog(requireActivity())
+        info.setContentView(R.layout.info)
+        info.show()
+        val backBtn = info.findViewById<Button>(R.id.backButton)
+        backBtn.setOnClickListener{
+            info.dismiss()
+        }
+
     }
 
     private fun getNumbersUsingApp() {

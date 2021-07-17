@@ -31,6 +31,7 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
         var parent_layout: LinearLayout = itemView.findViewById(R.id.upcoming_rv_parent_layout)
         var button_markDone : CardView = itemView.findViewById(R.id.rv_markDone)
         var buttonDelete : CardView = itemView.findViewById(R.id.rv_delete)
+        var info: Button = itemView.findViewById(R.id.infoUpcoming_rv)
 
         var image: ImageView = itemView.findViewById(R.id.rv_home_image)
         val personGif : IntArray = intArrayOf(
@@ -90,6 +91,10 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
 
         holder.button_markDone.setOnClickListener {
             listener.onClick(holder.button_markDone, item)
+
+        holder.info.setOnClickListener{
+            listener.onClick(holder.info,item)
+        }
 
 
 

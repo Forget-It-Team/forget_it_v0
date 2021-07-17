@@ -13,7 +13,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.forget_it_v0.PhoneNumberFragmentDirections
 import com.example.android.forget_it_v0.R
-import com.example.android.forget_it_v0.SendRemindersFragmentDirections
 import com.example.android.forget_it_v0.models.Contact
 import com.example.android.forget_it_v0.models.RecyclerViewOnClickContact
 import pl.droidsonroids.gif.GifImageView

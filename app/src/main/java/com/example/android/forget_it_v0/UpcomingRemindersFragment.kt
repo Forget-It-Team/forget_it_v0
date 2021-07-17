@@ -123,6 +123,15 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
 
 
     }
+    private fun info(){
+        val info =  Dialog(requireActivity())
+        info.setContentView(R.layout.info)
+        info.show()
+        val backBtn = info.findViewById<Button>(R.id.backButton)
+        backBtn.setOnClickListener{
+            info.dismiss()
+        }
+    }
 
 
 

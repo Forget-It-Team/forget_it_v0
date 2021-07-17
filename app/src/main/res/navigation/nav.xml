@@ -26,27 +26,5 @@
         android:id="@+id/sendRemindersFragment"
         android:name="com.example.android.forget_it_v0.SendRemindersFragment"
         android:label="fragment_send_reminders"
-        tools:layout="@layout/fragment_send_reminders" >
-        <action
-            android:id="@+id/action_sendRemindersFragment_to_createReminderFragment"
-            app:destination="@id/createReminderFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/createReminderFragment"
-        android:name="com.example.android.forget_it_v0.CreateReminderFragment"
-        android:label="CreateReminderFragment"
-        tools:layout="@layout/fragment_create_reminder">
-        <argument
-            android:name="name"
-            app:argType="string" />
-        <argument
-            android:name="number"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_createReminderFragment_to_upcomingRemindersFragment"
-            app:destination="@id/upcomingRemindersFragment" />
-        <argument
-            android:name="myNumber"
-            app:argType="string" />
-    </fragment>
+        tools:layout="@layout/fragment_send_reminders" />
 </navigation>
