@@ -79,5 +79,8 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
+
+//    permission
+    implementation "com.karumi:dexter:6.2.2"
 }
 

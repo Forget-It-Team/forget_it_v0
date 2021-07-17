@@ -35,12 +35,18 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Suppress("DEPRECATION")
-class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
+class SendRemindersFragment : Fragment() ,RecyclerViewOnClickContact{
 
     private var number: String = Firebase.auth.currentUser!!.phoneNumber!!.subSequence(3, 13).toString()
     //list of people using the app
@@ -48,11 +54,8 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
     private var myList: ArrayList<String> = arrayListOf()
     private var contacts : HashMap<String, String> = HashMap()
     private lateinit var binding : FragmentSendRemindersBinding
-    //to prevent repeated numbers from being added. Holds unique numbers
-//    private var numbersStored: ArrayList<String> = arrayListOf()
     private lateinit var contactAdapter: ContactAdapter
 
-    //the final list, which is sent to the RV adapter
     private var contactList: ArrayList<Contact> = arrayListOf()
     private var listHaving: ArrayList<Contact> = arrayListOf()
     private var listNotHaving: ArrayList<Contact> = arrayListOf()
@@ -69,8 +72,34 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_send_reminders,container,false)
-        initRV()
-        requestContactPermission()
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
+        {
+            Dexter
+                .withContext(requireContext())
+                .withPermission(Manifest.permission.READ_CONTACTS)
+                .withListener(object : PermissionListener{
+                    override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
+                        initRV()
+                        getNumbersUsingApp()
+                    }
+
+                    override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
+                        requireActivity().toast("Please do not deny, otherwise you won't be able to use the app and connect with your friends")
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        p0: PermissionRequest?,
+                        p1: PermissionToken?
+                    ) {
+                        p1?.continuePermissionRequest()
+                    }
+                })
+                .check()
+
+        }else{
+            initRV()
+            getNumbersUsingApp()
+        }
         return binding.root
     }
 
@@ -78,12 +107,6 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         binding.setPersonalReminder.setOnClickListener {
-            val bundle= Bundle()
-            bundle.putString("name", "Myself!")
-            bundle.putString("number", number)
-            bundle.putString("myNumber", number)
-//            requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment, create_reminder_fragment).commit()
-
             val intent = Intent(requireActivity(), CreateReminderActivity::class.java)
             intent.putExtra("name", "MySelf!")
             intent.putExtra("number", number)
@@ -141,94 +164,8 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
         Log.i("COntact", json)
         editor.putString("contact list", json)
         editor.apply()
-//        upload_contacts()
     }
 
-
-    private fun requestContactPermission() {
-        GlobalScope.launch(Dispatchers.Main) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.READ_CONTACTS
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(
-                            requireActivity(),
-                            Manifest.permission.READ_CONTACTS
-                        )
-                    ) {
-                        val builder: android.app.AlertDialog.Builder =
-                            android.app.AlertDialog.Builder(requireContext())
-                        builder.setTitle("Read Contacts permission")
-                        builder.setPositiveButton(android.R.string.ok, null)
-                        builder.setMessage("Please enable access to contacts.")
-                        builder.setOnDismissListener {
-                            requestPermissions(
-                                arrayOf(Manifest.permission.READ_CONTACTS),
-                                PERMISSIONS_REQUEST_READ_CONTACTS
-                            )
-                        }
-                        builder.show()
-                    } else {
-                        ActivityCompat.requestPermissions(
-                            requireActivity(), arrayOf(Manifest.permission.READ_CONTACTS),
-                            PERMISSIONS_REQUEST_READ_CONTACTS
-                        )
-                    }
-                } else {
-                    getNumbersUsingApp()
-//                    home_constraint.visibility = View.VISIBLE
-//                    home_warning.visibility = View.GONE
-                    binding.contactsRv.visibility = View.VISIBLE
-                    binding.textviewContacts.visibility = View.VISIBLE
-                }
-            } else {
-                requireActivity().toast("Permission to read contacts has been granted")
-                getNumbersUsingApp()
-//                home_constraint.visibility = View.VISIBLE
-//                home_warning.visibility = View.GONE
-                binding.contactsRv.visibility = View.VISIBLE
-                binding.textviewContacts.visibility = View.VISIBLE
-            }
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        GlobalScope.launch(Dispatchers.Main) {
-            when (requestCode) {
-                PERMISSIONS_REQUEST_READ_CONTACTS -> {
-                    if (grantResults.isNotEmpty()
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        Log.d("permission", "called")
-                        getNumbersUsingApp()
-
-//                        home_constraint.visibility = View.VISIBLE
-//                        home_warning.visibility = View.GONE
-//                        home_rv.visibility = View.VISIBLE
-//                        home_upcoming_text.visibility = View.VISIBLE
-                    } else {
-                        requireActivity().toast("Please do not deny, otherwise you won't be able to use the app and connect with your friends")
-//                        home_constraint.visibility = View.GONE
-//                        home_warning.visibility = View.VISIBLE
-//                        home_rv.visibility = View.GONE
-//                        home_upcoming_text.visibility = View.GONE
-                    }
-                }
-            }
-        }
-    }
-
-
-    private fun upload_contacts(){
-//        Firebase.firestore.collection(number).document("Contacts").add(contactList)
-    }
 
     private fun loadSharedPref() {
         val sharedPreferences: SharedPreferences =
@@ -248,8 +185,6 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
             contactAdapter.update(contactList)
             binding.progressCircular.visibility = View.GONE
         }
-
-
     }
 
     private fun initRV() {
@@ -285,13 +220,11 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
                 if (!hashMap.containsKey(phoneNo)) {
                     if (myList.contains(phoneNo)) {
                         contact = Contact(name, phoneNo, "Send Reminder", photo)
-//                        val con = UploadContacts(name, phoneNo)
 
                         contacts[phoneNo] = name
                         listHaving.add(contact)
                     } else {
                         contact = Contact(name, phoneNo, "Invite", photo)
-//                        val con = UploadContacts(name, phoneNo)
                         contacts[phoneNo] = name
                         listNotHaving.add(contact)
                     }
@@ -299,10 +232,6 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
                 }
             }
             contactList.clear()
-//            val myselfContact = Contact(
-//                "Myself!", number, "Set a Reminder", photo
-//            )
-//            contactList.add(myselfContact)
             contactList.addAll(listHaving)
             contactList.addAll(listNotHaving)
             contactAdapter.notifyDataSetChanged()
@@ -315,19 +244,11 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
 
     override fun onClick(text: String, contact: Contact) {
         if (text.equals("Send Reminder")) {
-//            view?.findNavController()?.navigate(SendRemindersFragmentDirections.actionSendRemindersFragmentToCreateReminderFragment(contact.name,contact.number,number))
             val intent = Intent(requireActivity(), CreateReminderActivity::class.java)
             intent.putExtra("name", contact.name)
             intent.putExtra("number", contact.number)
             intent.putExtra("myNumber", number)
             requireActivity().startActivity(intent)
-//            val bundle = Bundle()
-//            bundle.putString("name", contact.name)
-//            bundle.putString("number", contact.number)
-//            bundle.putString("myNumber", number)
-//            val create_reminder_fragment = CreateReminderFragment()
-//            create_reminder_fragment.arguments = bundle
-//            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, create_reminder_fragment).commit()
 
 
 
