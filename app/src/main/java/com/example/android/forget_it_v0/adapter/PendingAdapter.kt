@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.forget_it_v0.R
 import com.example.android.forget_it_v0.models.Pending
 import com.example.android.forget_it_v0.models.RecyclerViewOnClickPending
+import pl.droidsonroids.gif.GifImageButton
 import kotlin.random.Random
 
 class PendingAdapter(var list: ArrayList<Pending>, var listener : RecyclerViewOnClickPending) :
@@ -26,6 +27,7 @@ class PendingAdapter(var list: ArrayList<Pending>, var listener : RecyclerViewOn
         var btnA: CardView = itemView.findViewById(R.id.pending_rv_accept)
         var btnR: CardView = itemView.findViewById(R.id.pending_rv_reject)
         var image: ImageView = itemView.findViewById(R.id.pending_rv_image)
+        var info: GifImageButton = itemView.findViewById(R.id.infoButtonPending)
         val personGif : IntArray = intArrayOf(
             R.drawable.pokone,
             R.drawable.poktwo,
@@ -73,6 +75,10 @@ class PendingAdapter(var list: ArrayList<Pending>, var listener : RecyclerViewOn
     override fun onBindViewHolder(holder: PendingViewHolder, position: Int) {
         val item = list[position]
         holder.populate(item)
+
+        holder.info.setOnClickListener{
+            listener.onClick(holder.info,item)
+        }
 
         holder.btnA.setOnClickListener {
             listener.onClick(holder.btnA, list[position])

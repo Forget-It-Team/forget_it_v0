@@ -87,6 +87,7 @@
             android:src="@drawable/infogif"
             android:scaleType="fitCenter"
             android:layout_weight="5"
+            android:id="@+id/infoButtonPending"
             android:backgroundTint="@color/white"/>
         </LinearLayout>
 

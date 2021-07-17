@@ -12,7 +12,9 @@ import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RatingBar
+import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -123,11 +125,13 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
 
 
     }
-    private fun info(){
+    private fun info(title: String, desc: String, pending: Pending){
         val info =  Dialog(requireActivity())
         info.setContentView(R.layout.info)
+        info.findViewById<TextView>(R.id.infoTitle).text = title
+        info.findViewById<TextView>(R.id.infoDesc).text = desc
         info.show()
-        val backBtn = info.findViewById<Button>(R.id.backButton)
+        val backBtn = info.findViewById<CardView>(R.id.backButton)
         backBtn.setOnClickListener{
             info.dismiss()
         }
@@ -548,17 +552,26 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
 
 
     override fun onClick(v: View, pending: Pending) {
-        if (pending.pastDeadline) {
-            if(v.id == R.id.rv_markDone) {
-                onYes(pending)
-            }else {
-                onNo(pending)
-            }
+        if (v.id == R.id.infoUpcoming_rv) {
+            val remin = pending.task.split(";").toTypedArray()
+            val title = remin[0]
+            val desc = remin[1]
+            info(title,desc,pending)
+            Log.i("ifelse","if else is working")
+
         } else {
-            if(v.id == R.id.rv_markDone) {
-                onCompleted(pending)
-            }else {
-                onDelete(pending)
+            if (pending.pastDeadline) {
+                if (v.id == R.id.rv_markDone) {
+                    onYes(pending)
+                } else {
+                    onNo(pending)
+                }
+            } else {
+                if (v.id == R.id.rv_markDone) {
+                    onCompleted(pending)
+                } else {
+                    onDelete(pending)
+                }
             }
         }
     }

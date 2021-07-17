@@ -17,7 +17,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -76,6 +78,20 @@ class PendingRemindersFragment : Fragment() , RecyclerViewOnClickPending {
 
         auth = Firebase.auth
         return binding.root
+    }
+    private fun info(pending: Pending){
+        val remin = pending.task.split(";").toTypedArray()
+        val title = remin[0]
+        val desc = remin[1]
+        val info =  Dialog(requireActivity())
+        info.setContentView(R.layout.info)
+        info.findViewById<TextView>(R.id.infoTitle).text = title
+        info.findViewById<TextView>(R.id.infoDesc).text = desc
+        info.show()
+        val backBtn = info.findViewById<CardView>(R.id.backButton)
+        backBtn.setOnClickListener{
+            info.dismiss()
+        }
     }
 
 //    @RequiresApi(Build.VERSION_CODES.O)
@@ -238,7 +254,9 @@ class PendingRemindersFragment : Fragment() , RecyclerViewOnClickPending {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(view: View, pending: Pending) {
+
         when (view.id) {
+            R.id.infoButtonPending -> info(pending)
             R.id.pending_rv_reject -> onReject(pending)
             R.id.pending_rv_accept -> onAccept(pending)
         }
