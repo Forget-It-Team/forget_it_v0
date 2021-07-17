@@ -90,7 +90,7 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
 
         holder.button_markDone.setOnClickListener {
             listener.onClick(holder.button_markDone, item)
-
+        }
 
 
         holder.buttonDelete.setOnClickListener {
@@ -98,4 +98,4 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
         }
 //
     }
-}}
+    }

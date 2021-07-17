@@ -67,9 +67,8 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_send_reminders,container,false)
-        requestContactPermission()
         initRV()
-        getNumbersUsingApp()
+        requestContactPermission()
         return binding.root
     }
 
@@ -177,8 +176,36 @@ class SendRemindersFragment : Fragment() , RecyclerViewOnClickContact{
 //                home_warning.visibility = View.GONE
                 binding.contactsRv.visibility = View.VISIBLE
                 binding.textviewContacts.visibility = View.VISIBLE
+                getNumbersUsingApp()
+            }
+        }
+    }
 
-
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        GlobalScope.launch(Dispatchers.Main) {
+            when (requestCode) {
+                PERMISSIONS_REQUEST_READ_CONTACTS -> {
+                    if (grantResults.isNotEmpty()
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        getNumbersUsingApp()
+//                        home_constraint.visibility = View.VISIBLE
+//                        home_warning.visibility = View.GONE
+//                        home_rv.visibility = View.VISIBLE
+//                        home_upcoming_text.visibility = View.VISIBLE
+                    } else {
+                        requireActivity().toast("Please do not deny, otherwise you won't be able to use the app and connect with your friends")
+//                        home_constraint.visibility = View.GONE
+//                        home_warning.visibility = View.VISIBLE
+//                        home_rv.visibility = View.GONE
+//                        home_upcoming_text.visibility = View.GONE
+                    }
+                }
             }
         }
     }
