@@ -97,6 +97,29 @@ class OtpFragment : Fragment() {
     private fun signup(credential: PhoneAuthCredential) {
         Log.i("AAUUTTHH", "here1")
         number = number.replace("+91", "").replace(" ", "")
+
+        Log.i("AAUUTTHH", "here3")
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    Log.i("AAUUTTHH", "here4")
+                    addNewUser()
+                    Log.i("AUTH", "SUCCESS")
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    intent.putExtra(
+                        "number",
+                        number.replace("+91", "").replace(" ", "")
+                    )
+                    requireActivity().startActivity(intent)
+                    requireActivity().finish()
+                } else {
+                    Log.i("AAUUTTHH", "here4 fal")
+                    Log.i("AUTH", "FAIL")
+                }
+            }
+    }
+
+    private fun addNewUser(){
         val user = hashMapOf(
             "number" to number
         )
@@ -118,27 +141,6 @@ class OtpFragment : Fragment() {
                             Log.i("AAUUTTHH", "here2 fail")
                         }
                 }
-
-                Log.i("AAUUTTHH", "here3")
-                auth.signInWithCredential(credential)
-                    .addOnCompleteListener(requireActivity()) { task ->
-                        if (task.isSuccessful) {
-                            Log.i("AAUUTTHH", "here4")
-
-                            Log.i("AUTH", "SUCCESS")
-
-                            val intent = Intent(requireContext(), MainActivity::class.java)
-                            intent.putExtra(
-                                "number",
-                                number.replace("+91", "").replace(" ", "")
-                            )
-                            requireActivity().startActivity(intent)
-                            requireActivity().finish()
-                        } else {
-                            Log.i("AAUUTTHH", "here4 fal")
-                            Log.i("AUTH", "FAIL")
-                        }
-                    }
             }
     }
 
