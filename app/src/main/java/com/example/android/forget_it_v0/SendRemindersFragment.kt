@@ -153,39 +153,8 @@ class SendRemindersFragment : Fragment() ,RecyclerViewOnClickContact{
             }
     }
 
-    private fun writeSharedPref() {
-        val sharedPreferences: SharedPreferences =
-            requireActivity().getSharedPreferences("contacts", Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        val gson: Gson = Gson()
-        val json: String = gson.toJson(contactList)
-        Log.i("Contact", "Inside write")
-
-        Log.i("COntact", json)
-        editor.putString("contact list", json)
-        editor.apply()
-    }
 
 
-    private fun loadSharedPref() {
-        val sharedPreferences: SharedPreferences =
-            requireActivity().getSharedPreferences("contacts", Context.MODE_PRIVATE)
-        val gson = Gson()
-        val json: String? = sharedPreferences.getString("contact list", null)
-        val type = object : TypeToken<List<Contact?>?>() {}.type
-
-        if (json == null)
-            getContacts()
-        else {
-            Log.i("Contact", json)
-            contactList = gson.fromJson(json, type)
-            Log.i("Contact", "Deep inside load Shared")
-
-            Log.i("Contact", contactList.toString())
-            contactAdapter.update(contactList)
-            binding.progressCircular.visibility = View.GONE
-        }
-    }
 
     private fun initRV() {
         binding.progressCircular.visibility = View.VISIBLE
@@ -236,7 +205,6 @@ class SendRemindersFragment : Fragment() ,RecyclerViewOnClickContact{
             contactList.addAll(listNotHaving)
             contactAdapter.notifyDataSetChanged()
             Firebase.firestore.collection("Contacts").document(number).set(UploadContactList(contacts))
-            writeSharedPref()
 
             binding.progressCircular.visibility = View.GONE
         }
