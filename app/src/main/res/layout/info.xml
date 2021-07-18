@@ -13,6 +13,11 @@
         app:lottie_loop="true"
         android:alpha="0.7"/>
     <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/origin2"
+        android:layout_below="@id/animationView"/>
+    <TextView
         android:textAlignment="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,9 +47,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:layout_below="@id/infoDesc"
+        android:layout_below="@id/origin2"
         android:layout_centerInParent="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginBottom="30dp"
         android:backgroundTint="#072337"
         app:cardCornerRadius="20dp"
         android:id="@+id/backButton">

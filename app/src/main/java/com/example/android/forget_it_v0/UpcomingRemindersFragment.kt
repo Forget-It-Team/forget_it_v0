@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.forget_it_v0.adapter.UpcomingAdapter
 import com.example.android.forget_it_v0.databinding.FragmentUpcomingRemindersBinding
+
 import com.example.android.forget_it_v0.models.*
 import com.example.android.forget_it_v0.repository.FirestoreRepo
 import com.google.firebase.auth.FirebaseAuth
