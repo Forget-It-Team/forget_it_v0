@@ -8,7 +8,7 @@
         android:id="@+id/animationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:lottie_url="https://assets7.lottiefiles.com/packages/lf20_0PEZaV.json"
+        app:lottie_rawRes="@raw/lottie"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         android:alpha="0.7"/>
