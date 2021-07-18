@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import com.example.android.forget_it_v0.databinding.ActivitySplashBinding
 @Suppress("Deprecation")
@@ -25,7 +26,6 @@ class splashActivity : AppCompatActivity() {
         binding.logoText.setAnimation(BottomToTop)
 
 
-
         // This is used to hide the status bar and make
         // the splash screen as a full screen activity.
         window.setFlags(
@@ -39,7 +39,7 @@ class splashActivity : AppCompatActivity() {
             val intent = Intent(this, AuthenticationActivity::class.java)
             startActivity(intent)
             finish()
-        }, 2500) // 3000 is the delayed time in milliseconds.
+        }, 2500) // 2500 is the delayed time in milliseconds.
     }
 
 
