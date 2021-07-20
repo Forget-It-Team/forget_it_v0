@@ -34,6 +34,7 @@ import com.synnapps.carouselview.CarouselView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.FieldPosition
 import java.time.LocalDateTime
 import java.time.Month
 import java.time.format.DateTimeFormatter
@@ -435,7 +436,7 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
         GlobalScope.launch(Dispatchers.Main) {
             val firestoreRV = Firebase.firestore.collection(number).document("Upcoming")
                 .collection("Accepted")
-
+            list.clear()
             val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
 
             progressShow()
@@ -552,7 +553,8 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
     }
 
 
-    override fun onClick(v: View, pending: Pending) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onClick(v: View, pending: Pending, position: Int) {
         if (v.id == R.id.infoUpcoming_rv) {
             val remin = pending.task.split(";").toTypedArray()
             val title = remin[0]
@@ -563,21 +565,22 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
         } else {
             if (pending.pastDeadline) {
                 if (v.id == R.id.rv_markDone) {
-                    onYes(pending)
+                    onYes(pending, position)
                 } else {
-                    onNo(pending)
+                    onNo(pending, position)
                 }
             } else {
                 if (v.id == R.id.rv_markDone) {
-                    onCompleted(pending)
+                    onCompleted(pending, position)
                 } else {
-                    onDelete(pending)
+                    onDelete(pending, position)
                 }
             }
         }
     }
 
-    private fun onYes(pending: Pending) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun onYes(pending: Pending, position: Int) {
         progressShow()
         FirestoreRepo.swapData("Accepted", "Completed", pending.from, number, pending)
         if(AudioPlayer.isPlaying()) {
@@ -588,10 +591,12 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
 
         list.remove(pending)
         upcomingReminderAdapter.updateList(list)
+        upcomingReminderAdapter.notifyItemChanged(position)
         deadlineDialog.dismiss()
     }
 
-    private fun onNo(pending: Pending) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun onNo(pending: Pending, position: Int) {
         progressShow()
         FirestoreRepo.swapData("Accepted", "Incomplete", pending.from, number, pending)
         progressHide()
@@ -602,10 +607,12 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
 
         list.remove(pending)
         upcomingReminderAdapter.updateList(list)
+        upcomingReminderAdapter.notifyItemChanged(position)
         deadlineDialog.dismiss()
     }
 
-    private fun onDelete(pending: Pending) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun onDelete(pending: Pending, position: Int) {
         progressShow()
         FirestoreRepo.swapData("Accepted", "Deleted", pending.from, number, pending)
         progressHide()
@@ -614,18 +621,20 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
 
         list.remove(pending)
         upcomingReminderAdapter.updateList(list)
+        upcomingReminderAdapter.notifyItemChanged(position)
         upcomingDialog.dismiss()
     }
 
-    private fun onCompleted(pending: Pending) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun onCompleted(pending: Pending, position: Int) {
         progressShow()
         FirestoreRepo.swapData("Accepted", "Completed", pending.from, number, pending)
         progressHide()
 
         requireActivity().toast("You have completed this task. Well done!")
-
         list.remove(pending)
         upcomingReminderAdapter.updateList(list)
+        upcomingReminderAdapter.notifyDataSetChanged()
         upcomingDialog.dismiss()
     }
 

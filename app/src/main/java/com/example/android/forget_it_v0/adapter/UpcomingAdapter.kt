@@ -70,8 +70,9 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
 
             if (pending.pastDeadline) {
                 parent_layout.setBackgroundResource(R.drawable.upcoming_rv_border_red)
+            }else{
+                parent_layout.setBackgroundResource(R.color.colorBackground)
             }
-
         }
 
     }
@@ -96,17 +97,17 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
 
 
         holder.button_markDone.setOnClickListener {
-            listener.onClick(holder.button_markDone, item)
+            listener.onClick(holder.button_markDone, item, position)
         }
 
         holder.info.setOnClickListener{
-            listener.onClick(holder.info,item)
+            listener.onClick(holder.info,item, position)
         }
 
 
 
         holder.buttonDelete.setOnClickListener {
-            listener.onClick(holder.buttonDelete, item)
+            listener.onClick(holder.buttonDelete, item, position)
         }
 //
     }

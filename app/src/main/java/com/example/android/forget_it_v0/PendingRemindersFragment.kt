@@ -263,6 +263,7 @@ class PendingRemindersFragment : Fragment() , RecyclerViewOnClickPending {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun onReject(pending: Pending) {
         rejectDialog.show()
         dialogYes.setOnClickListener {
@@ -286,8 +287,8 @@ class PendingRemindersFragment : Fragment() , RecyclerViewOnClickPending {
         FirestoreRepo.swapData("Pending", "Accepted", pending.from, number, pending)
 
         pendingList.remove(pending)
+//        addData()
         pendingAdapter.notifyDataSetChanged()
-
         //adds an alarm
 
         progressShow()
