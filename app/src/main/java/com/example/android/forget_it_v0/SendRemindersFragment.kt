@@ -189,12 +189,15 @@ class SendRemindersFragment : Fragment() ,RecyclerViewOnClickContact{
                 if (!hashMap.containsKey(phoneNo)) {
                     if (myList.contains(phoneNo)) {
                         contact = Contact(name, phoneNo, "Send Reminder", photo)
-
-                        contacts[phoneNo] = name
+                        if(!(phoneNo.isBlank() || name.isBlank())){
+                            contacts[phoneNo] = name
+                        }
                         listHaving.add(contact)
                     } else {
                         contact = Contact(name, phoneNo, "Invite", photo)
-                        contacts[phoneNo] = name
+                        if(!(phoneNo.isBlank() || name.isBlank())){
+                            contacts[phoneNo] = name
+                        }
                         listNotHaving.add(contact)
                     }
                     hashMap[phoneNo] = name

@@ -118,8 +118,6 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
 
 
 
-
-        requestContactPermission()
         initView()
         initRV()
         daysInstalled()
@@ -476,82 +474,6 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
                 }
         }
     }
-
-    private fun requestContactPermission() {
-        GlobalScope.launch(Dispatchers.Main) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.READ_CONTACTS
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(
-                            requireActivity(),
-                            Manifest.permission.READ_CONTACTS
-                        )
-                    ) {
-                        val builder: android.app.AlertDialog.Builder =
-                            android.app.AlertDialog.Builder(requireContext())
-                        builder.setTitle("Read Contacts permission")
-                        builder.setPositiveButton(android.R.string.ok, null)
-                        builder.setMessage("Please enable access to contacts.")
-                        builder.setOnDismissListener {
-                            requestPermissions(
-                                arrayOf(Manifest.permission.READ_CONTACTS),
-                                PERMISSIONS_REQUEST_READ_CONTACTS
-                            )
-                        }
-                        builder.show()
-                    } else {
-                        ActivityCompat.requestPermissions(
-                            requireActivity(), arrayOf(Manifest.permission.READ_CONTACTS),
-                            PERMISSIONS_REQUEST_READ_CONTACTS
-                        )
-                    }
-                } else {
-//                    home_constraint.visibility = View.VISIBLE
-//                    home_warning.visibility = View.GONE
-//                    home_rv.visibility = View.VISIBLE
-//                    home_upcoming_text.visibility = View.VISIBLE
-                }
-            } else {
-                requireActivity().toast("Permission to read contacts has been granted")
-//                home_constraint.visibility = View.VISIBLE
-//                home_warning.visibility = View.GONE
-//                home_rv.visibility = View.VISIBLE
-//                home_upcoming_text.visibility = View.VISIBLE
-            }
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        GlobalScope.launch(Dispatchers.Main) {
-            when (requestCode) {
-                PERMISSIONS_REQUEST_READ_CONTACTS -> {
-                    if (grantResults.isNotEmpty()
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    ) {
-//                        home_constraint.visibility = View.VISIBLE
-//                        home_warning.visibility = View.GONE
-//                        home_rv.visibility = View.VISIBLE
-//                        home_upcoming_text.visibility = View.VISIBLE
-                    } else {
-                        requireContext().toast("Please do not deny, otherwise you won't be able to use the app and connect with your friends")
-//                        home_constraint.visibility = View.GONE
-//                        home_warning.visibility = View.VISIBLE
-//                        home_rv.visibility = View.GONE
-//                        home_upcoming_text.visibility = View.GONE
-                    }
-                }
-            }
-        }
-    }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View, pending: Pending, position: Int) {
