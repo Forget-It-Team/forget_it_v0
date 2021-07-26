@@ -17,14 +17,14 @@
 <!--            app:slideInterval="3000"-->
 <!--            app:strokeColor="#FF777777"-->
 <!--            app:strokeWidth="1dp"/>-->
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animationView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:lottie_url="https://assets6.lottiefiles.com/packages/lf20_0sjsnpsr.json"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            android:visibility="gone"/>
+<!--        <com.airbnb.lottie.LottieAnimationView-->
+<!--            android:id="@+id/animationView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:lottie_url="https://assets6.lottiefiles.com/packages/lf20_0sjsnpsr.json"-->
+<!--            app:lottie_autoPlay="true"-->
+<!--            app:lottie_loop="true"-->
+<!--            android:visibility="gone"/>-->
 
 
 

@@ -9,6 +9,8 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import com.example.android.forget_it_v0.databinding.ActivitySplashBinding
+import com.google.firebase.auth.FirebaseAuth
+
 @Suppress("Deprecation")
 class splashActivity : AppCompatActivity() {
     lateinit var binding: ActivitySplashBinding
@@ -36,9 +38,16 @@ class splashActivity : AppCompatActivity() {
         // we used the postDelayed(Runnable, time) method
         // to send a message with a delayed time.
         Handler().postDelayed({
-            val intent = Intent(this, AuthenticationActivity::class.java)
-            startActivity(intent)
-            finish()
+            if(FirebaseAuth.getInstance().currentUser == null){
+            val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()}
+            else{
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
         }, 2500) // 2500 is the delayed time in milliseconds.
     }
 

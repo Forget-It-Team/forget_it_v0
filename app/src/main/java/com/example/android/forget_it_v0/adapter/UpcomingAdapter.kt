@@ -29,10 +29,11 @@ import kotlin.random.Random
 @Suppress("Deprecation")
 class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerViewOnClick):
     RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
-
     var flag : String = ""
 
     inner class UpcomingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var NewDateCV : CardView = itemView.findViewById(R.id.newDateCV)
+        var NewDateTV : TextView = itemView.findViewById(R.id.newDateTV)
         var name: TextView = itemView.findViewById(R.id.rv_home_contact_name)
         var reminder: TextView = itemView.findViewById(R.id.rv_reminder)
         var date: TextView = itemView.findViewById(R.id.rv_date)
@@ -98,6 +99,7 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: UpcomingViewHolder, position: Int) {
+
         val item = list[position]
         holder.populate(item)
 
@@ -110,11 +112,20 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
         if(flag != item.date.toString().subSequence(0,10) && item.date.toString().subSequence(0,10)==currentDate.toString()){
             flag = item.date.toString().subSequence(0,10) as String
             Log.d("visibility", "turn on visibility and set text today")
+            holder.NewDateCV.visibility =View.VISIBLE
+            holder.NewDateTV.text = "Today"
+
+
+
         }else if (flag != item.date.toString().subSequence(0,10)){
             flag = item.date.toString().subSequence(0,10) as String
             Log.d("visibility", "turn on visibility and set text item.date.toString.subSequence(0,10)")
+            holder.NewDateCV.visibility =View.VISIBLE
+            holder.NewDateTV.text = item.date.toString().subSequence(0,10)
         }else{
             Log.d("visibility", "turn off visibility")
+            holder.NewDateCV.visibility =View.GONE
+
         }
 
 

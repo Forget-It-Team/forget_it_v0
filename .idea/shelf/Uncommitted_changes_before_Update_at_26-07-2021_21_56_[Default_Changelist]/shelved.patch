@@ -1,0 +1,50 @@
+Index: app/src/main/res/layout/upcoming_rv.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\r\n    <LinearLayout\r\n        xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n        xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n        android:orientation=\"vertical\"\r\n        android:layout_height=\"205dp\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_marginHorizontal=\"20dp\"\r\n        android:layout_marginVertical=\"5dp\">\r\n    <androidx.cardview.widget.CardView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"30dp\"\r\n        app:cardCornerRadius=\"20dp\"\r\n        android:foreground=\"@drawable/cardedge\"\r\n        android:layout_marginBottom=\"5dp\"\r\n        android:visibility=\"gone\">\r\n        <TextView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:gravity=\"center\"\r\n            android:text=\"new date\"\r\n            android:id=\"@+id/newDate\"/>\r\n    </androidx.cardview.widget.CardView>\r\n    <androidx.cardview.widget.CardView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"170dp\"\r\n        app:cardCornerRadius=\"20dp\"\r\n        android:backgroundTint=\"#D8F3FF\"\r\n        android:foreground=\"@drawable/cardedge\">\r\n\r\n<LinearLayout\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    android:background=\"#D8F3FF\"\r\n    android:id=\"@+id/upcoming_rv_parent_layout\">\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:orientation=\"horizontal\"\r\n        android:layout_weight=\"1.6\"\r\n        android:background=\"#072337\">\r\n\r\n        <ImageView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:src=\"@drawable/logo\"\r\n            android:id=\"@+id/rv_home_image\"\r\n            android:layout_weight=\"2\"/>\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:orientation=\"vertical\"\r\n            android:layout_weight=\"1\">\r\n            <TextView\r\n                android:id=\"@+id/rv_home_contact_name\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:text=\"Name\"\r\n                android:layout_marginEnd=\"8dp\"\r\n                android:maxLines=\"1\"\r\n                android:ellipsize=\"end\"\r\n                android:textColor=\"@color/white\"\r\n                android:textSize=\"20dp\"\r\n                android:fontFamily=\"@font/montserrat_regular\"\r\n                android:layout_weight=\"1\"\r\n                android:textStyle=\"bold\"/>\r\n            <TextView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:layout_weight=\"1.5\"\r\n                android:text=\"date\"\r\n                android:id=\"@+id/rv_date\"\r\n                android:textSize=\"12dp\"\r\n                android:textColor=\"@color/white\"\r\n                />\r\n\r\n        </LinearLayout>\r\n    </LinearLayout>\r\n    <androidx.cardview.widget.CardView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"2dp\"\r\n        app:cardBackgroundColor=\"#072337\"/>\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:layout_weight=\"0.7\"\r\n        android:orientation=\"vertical\">\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_weight=\"1\"\r\n            android:orientation=\"horizontal\">\r\n        <TextView\r\n            android:layout_margin=\"10dp\"\r\n            android:id=\"@+id/rv_reminder\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:text=\"Title\"\r\n            android:layout_weight=\"1\"\r\n            android:textSize=\"15dp\"\r\n            android:fontFamily=\"@font/montserrat_regular\"/>\r\n        <pl.droidsonroids.gif.GifImageButton\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_weight=\"5\"\r\n            android:src=\"@drawable/infogif\"\r\n            android:scaleType=\"fitCenter\"\r\n            android:foreground=\"@drawable/cardedge2\"\r\n            android:id=\"@+id/infoUpcoming_rv\"\r\n            android:backgroundTint=\"@color/white\"\r\n            android:layout_margin=\"5dp\"/>\r\n        </LinearLayout>\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:orientation=\"horizontal\"\r\n            android:layout_weight=\"1.5\">\r\n            <androidx.cardview.widget.CardView\r\n                android:id=\"@+id/rv_markDone\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:text=\"Mark done\"\r\n                android:layout_weight=\"1\"\r\n                android:layout_margin=\"5dp\"\r\n                android:backgroundTint=\"#072337\"\r\n                app:cardCornerRadius=\"20dp\">\r\n                <TextView\r\n                    android:text=\"Mark Done\"\r\n                    android:textSize=\"20dp\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:gravity=\"center\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"/>\r\n            </androidx.cardview.widget.CardView>\r\n            <androidx.cardview.widget.CardView\r\n                android:id=\"@+id/rv_delete\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:backgroundTint=\"#072337\"\r\n                app:cardCornerRadius=\"20dp\"\r\n                android:layout_weight=\"1\"\r\n                android:layout_margin=\"5dp\">\r\n                <TextView\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:text=\"Delete\"\r\n                    android:textSize=\"20dp\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:gravity=\"center\"/>\r\n            </androidx.cardview.widget.CardView>\r\n\r\n\r\n        </LinearLayout>\r\n    </LinearLayout>\r\n</LinearLayout>\r\n    </androidx.cardview.widget.CardView>\r\n</LinearLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/upcoming_rv.xml	(revision fb8a68593c33ca7b2249545ba8a6587aee08b22e)
++++ app/src/main/res/layout/upcoming_rv.xml	(date 1627316804806)
+@@ -4,30 +4,13 @@
+         xmlns:android="http://schemas.android.com/apk/res/android"
+         xmlns:app="http://schemas.android.com/apk/res-auto"
+         android:orientation="vertical"
+-        android:layout_height="205dp"
++        android:layout_height="200dp"
+         android:layout_width="match_parent"
+         android:layout_marginHorizontal="20dp"
+         android:layout_marginVertical="5dp">
+     <androidx.cardview.widget.CardView
+         android:layout_width="match_parent"
+-        android:layout_height="30dp"
+-        app:cardCornerRadius="20dp"
+-        android:foreground="@drawable/cardedge"
+-        android:layout_marginBottom="5dp"
+-        android:visibility="gone">
+-        <TextView
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            android:gravity="center"
+-            android:text="new date"
+-            android:id="@+id/newDate"/>
+-    </androidx.cardview.widget.CardView>
+-    <androidx.cardview.widget.CardView
+-        android:layout_width="match_parent"
+-        android:layout_height="170dp"
+-        app:cardCornerRadius="20dp"
+-        android:backgroundTint="#D8F3FF"
+-        android:foreground="@drawable/cardedge">
++        android:layout_height="30dp"/>
+ 
+ <LinearLayout
+     android:layout_width="match_parent"
+@@ -156,5 +139,5 @@
+         </LinearLayout>
+     </LinearLayout>
+ </LinearLayout>
+-    </androidx.cardview.widget.CardView>
+ </LinearLayout>
++</androidx.cardview.widget.CardView>
+\ No newline at end of file
