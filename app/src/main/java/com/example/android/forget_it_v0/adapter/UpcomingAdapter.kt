@@ -21,11 +21,17 @@ import com.example.android.forget_it_v0.models.Pending
 import com.example.android.forget_it_v0.models.RecyclerViewOnClick
 import pl.droidsonroids.gif.GifImageButton
 import pl.droidsonroids.gif.GifImageView
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 @Suppress("Deprecation")
 class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerViewOnClick):
     RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
+
+    var flag : String = ""
+
     inner class UpcomingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var name: TextView = itemView.findViewById(R.id.rv_home_contact_name)
         var reminder: TextView = itemView.findViewById(R.id.rv_reminder)
@@ -94,6 +100,24 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
     override fun onBindViewHolder(holder: UpcomingViewHolder, position: Int) {
         val item = list[position]
         holder.populate(item)
+
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val currentDate = dateFormat.format(Date())
+        Log.d("date",item.task+"   "+(item.date.toString().subSequence(0,10)==currentDate.toString()).toString()+"  "+currentDate.toString()+" "+item.date.toString().subSequence(0,10))
+
+
+
+        if(flag != item.date.toString().subSequence(0,10) && item.date.toString().subSequence(0,10)==currentDate.toString()){
+            flag = item.date.toString().subSequence(0,10) as String
+            Log.d("visibility", "turn on visibility and set text today")
+        }else if (flag != item.date.toString().subSequence(0,10)){
+            flag = item.date.toString().subSequence(0,10) as String
+            Log.d("visibility", "turn on visibility and set text item.date.toString.subSequence(0,10)")
+        }else{
+            Log.d("visibility", "turn off visibility")
+        }
+
+
 
 
         holder.button_markDone.setOnClickListener {
