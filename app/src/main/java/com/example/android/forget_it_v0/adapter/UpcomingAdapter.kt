@@ -12,15 +12,14 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.lottie.LottieAnimationView
+
 import com.example.android.forget_it_v0.AuthenticationActivity
 import com.example.android.forget_it_v0.R
 import com.example.android.forget_it_v0.models.Pending
 import com.example.android.forget_it_v0.models.RecyclerViewOnClick
 import pl.droidsonroids.gif.GifImageButton
-import pl.droidsonroids.gif.GifImageView
+
 import kotlin.random.Random
 
 @Suppress("Deprecation")
