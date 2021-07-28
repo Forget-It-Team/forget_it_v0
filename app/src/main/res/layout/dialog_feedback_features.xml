@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
+        android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
         android:id="@+id/dialog_feedback_features"
         android:layout_height="120dp"
@@ -41,6 +42,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:backgroundTint="#072337"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Next"

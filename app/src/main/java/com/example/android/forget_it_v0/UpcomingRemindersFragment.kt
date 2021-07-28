@@ -2,6 +2,7 @@ package com.example.android.forget_it_v0
 
 import android.Manifest
 import android.app.Dialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -61,9 +62,9 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
     private lateinit var suggestion_feedback : String
     private lateinit var price_willing : String
     private var list: ArrayList<Pending> = arrayListOf()
-    private lateinit  var number: String
     //    private var number : String = "9307829766"
     private var auth: FirebaseAuth = Firebase.auth
+    private var number: String = auth.currentUser!!.phoneNumber.toString().subSequence(3,13).toString()
     private var  phone = auth.currentUser!!.phoneNumber
 
 //    var sampleImages = intArrayOf(
@@ -102,6 +103,13 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
 //        binding.carouselView.pageCount = sampleImages.size
 //        binding.carouselView.setImageListener { position, imageView ->
 //            imageView.setImageResource(sampleImages[position])}
+        binding.addtaskBTN.setOnClickListener{
+            val intent = Intent(requireActivity(), CreateReminderActivity::class.java)
+            intent.putExtra("name", "MySelf!")
+            intent.putExtra("number", number)
+            intent.putExtra("myNumber", number)
+            requireActivity().startActivity(intent)
+        }
 
         return binding.root
     }
@@ -383,7 +391,7 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
     }
 
     private fun initView() {
-        number = requireActivity().intent.getStringExtra("number").toString()
+//        number = requireActivity().intent.getStringExtra("number").toString()
 
         upcomingDialog = Dialog(requireActivity())
         deadlineDialog = Dialog(requireActivity())
@@ -468,9 +476,17 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
 
                     }
                     upcomingReminderAdapter.updateList(list)
+                    Log.d("list", list.toString())
                     progressHide()
+                    if(list.isEmpty()){
+                        binding.noTaskTV.visibility = View.VISIBLE
+                    }
+                    else{
+                        binding.noTaskTV.visibility = View.GONE
+                    }
                 }
         }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

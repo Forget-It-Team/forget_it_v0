@@ -77,6 +77,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Send\nReminder"
+            android:textSize="13dp"
+            android:gravity="center"
             android:textColor="@color/white"
             android:textAlignment="center"/>
     </androidx.cardview.widget.CardView>

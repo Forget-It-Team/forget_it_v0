@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.Button
@@ -34,7 +35,7 @@ class splashActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        Log.d("currentUser", FirebaseAuth.getInstance().currentUser.phoneNumber)
+        FirebaseAuth.getInstance().currentUser?.phoneNumber?.let { Log.d("currentUser", it) }
         // we used the postDelayed(Runnable, time) method
         // to send a message with a delayed time.
         Handler().postDelayed({
@@ -44,6 +45,7 @@ class splashActivity : AppCompatActivity() {
                 finish()}
             else{
                 val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("number", FirebaseAuth.getInstance().currentUser.toString().subSequence(3,13))
                 startActivity(intent)
                 finish()
             }

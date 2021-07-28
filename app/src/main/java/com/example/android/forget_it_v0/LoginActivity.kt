@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         )
 
         startActivityForResult(
-            AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).setTheme(R.style.loginUI)
+            AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers)
                 .build(), RC_Sign
         )
     }

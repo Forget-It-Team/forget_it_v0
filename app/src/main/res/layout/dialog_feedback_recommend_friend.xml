@@ -45,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Next"
+            android:backgroundTint="#072337"
             android:id="@+id/dialog_recommend_rating_button_next"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

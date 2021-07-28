@@ -210,7 +210,7 @@ class PendingRemindersFragment : Fragment() , RecyclerViewOnClickPending {
                 .orderBy("date")
                 .get()
                 .addOnSuccessListener { reminders ->
-
+                    pendingList.clear()
                     val formatter: DateTimeFormatter =
                         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
 

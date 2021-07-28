@@ -26,17 +26,18 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No"
+            android:text="Yes"
             android:backgroundTint="#11aa11"
-            android:id="@+id/reject_dialog_no"/>
-
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="40dp"
+            android:id="@+id/reject_dialog_yes"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Yes"
+            android:text="No"
             android:backgroundTint="#ff0000"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/reject_dialog_yes"/>
+
+            android:id="@+id/reject_dialog_no"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

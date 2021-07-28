@@ -53,7 +53,7 @@ class PendingAdapter(var list: ArrayList<Pending>, var listener : RecyclerViewOn
             Log.d("title", reminder.toString())
             task.text = title
             image.setImageResource(personGif[random.nextInt(personGif.size)])
-            date.text = pending.date.toString().replace("T", "\n").replace("-", "/")
+            date.text = pending.date.toString().replace("T", ",").replace("-", "/")
         }
 
     }

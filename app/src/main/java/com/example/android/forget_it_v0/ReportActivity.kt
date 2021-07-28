@@ -22,14 +22,6 @@ class ReportActivity : AppCompatActivity() {
         setContentView(R.layout.activity_report)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_report)
         number = intent.getStringExtra("number").toString()
-        binding.signOutBTN.setOnClickListener {
-            AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener { // user is now signed out
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
-                }
-        }
 
         binding.activityReportSubmitBtn.setOnClickListener {
             onSubmit()
