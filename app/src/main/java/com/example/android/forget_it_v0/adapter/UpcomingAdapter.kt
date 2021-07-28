@@ -33,6 +33,8 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
     var flag : String = ""
 
     inner class UpcomingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var NewDateCV : CardView = itemView.findViewById(R.id.newDateCV)
+        var NewDateTV : TextView = itemView.findViewById(R.id.newDateTV)
         var name: TextView = itemView.findViewById(R.id.rv_home_contact_name)
         var reminder: TextView = itemView.findViewById(R.id.rv_reminder)
         var date: TextView = itemView.findViewById(R.id.rv_date)
@@ -109,12 +111,17 @@ class UpcomingAdapter (var list: ArrayList<Pending>, var listener : RecyclerView
 
         if(flag != item.date.toString().subSequence(0,10) && item.date.toString().subSequence(0,10)==currentDate.toString()){
             flag = item.date.toString().subSequence(0,10) as String
+            holder.NewDateCV.visibility = View.VISIBLE
+            holder.NewDateTV.text = "Today"
             Log.d("visibility", "turn on visibility and set text today")
         }else if (flag != item.date.toString().subSequence(0,10)){
             flag = item.date.toString().subSequence(0,10) as String
+            holder.NewDateCV.visibility = View.VISIBLE
+            holder.NewDateTV.text = item.date.toString().subSequence(0,10)
             Log.d("visibility", "turn on visibility and set text item.date.toString.subSequence(0,10)")
         }else{
             Log.d("visibility", "turn off visibility")
+            holder.NewDateCV.visibility = View.GONE
         }
 
 
