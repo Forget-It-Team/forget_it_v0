@@ -34,7 +34,7 @@ class splashActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-
+        Log.d("currentUser", FirebaseAuth.getInstance().currentUser.phoneNumber)
         // we used the postDelayed(Runnable, time) method
         // to send a message with a delayed time.
         Handler().postDelayed({

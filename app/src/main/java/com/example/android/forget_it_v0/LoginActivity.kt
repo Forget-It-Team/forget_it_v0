@@ -53,7 +53,9 @@ class LoginActivity : AppCompatActivity() {
                 Handler().postDelayed({
                     binding.SuccessanimationView.visibility = View.VISIBLE
                 },4000)
-                startActivity(Intent(this, MainActivity::class.java))
+                val intent = Intent(this , MainActivity::class.java)
+                intent.putExtra("number", FirebaseAuth.getInstance().currentUser.toString().subSequence(3,13))
+                startActivity(intent)
             } else {
                 if (response == null) {
                     finish()
