@@ -1,11 +1,13 @@
 package com.example.android.forget_it_v0
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.example.android.forget_it_v0.databinding.ActivityReportBinding
 import com.example.android.forget_it_v0.models.toast
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -20,6 +22,14 @@ class ReportActivity : AppCompatActivity() {
         setContentView(R.layout.activity_report)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_report)
         number = intent.getStringExtra("number").toString()
+        binding.signOutBTN.setOnClickListener {
+            AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener { // user is now signed out
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish()
+                }
+        }
 
         binding.activityReportSubmitBtn.setOnClickListener {
             onSubmit()
