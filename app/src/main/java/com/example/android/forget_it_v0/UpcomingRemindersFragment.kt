@@ -30,7 +30,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
-import com.synnapps.carouselview.CarouselView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -66,7 +65,6 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
     //    private var number : String = "9307829766"
     private var auth: FirebaseAuth = Firebase.auth
     private var  phone = auth.currentUser!!.phoneNumber
-    var carouselView: CarouselView? = null
 
 //    var sampleImages = intArrayOf(
 //        R.drawable.one,
