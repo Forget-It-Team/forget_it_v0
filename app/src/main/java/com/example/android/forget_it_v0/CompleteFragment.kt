@@ -34,30 +34,39 @@ import java.time.format.DateTimeFormatter
 
 class CompleteFragment : Fragment() , RecyclerViewOnClickPending {
 
-    private lateinit var completedAdapter: CompleteAdapter
     private var completedList: ArrayList<Pending> = arrayListOf()
-    private lateinit var uncompletedAdapter: CompleteAdapter
     private var uncompletedList: ArrayList<Pending> = arrayListOf()
     private lateinit var binding : FragmentCompleteBinding
     private var hashMap: HashMap<String, String> = HashMap()
     private lateinit var photo: Bitmap
 
     private val auth = Firebase.auth
+    private var uncompletedAdapter: CompleteAdapter = CompleteAdapter(uncompletedList, this)
+    private var completedAdapter: CompleteAdapter = CompleteAdapter(completedList, this)
     private val phone : String = auth.currentUser!!.phoneNumber!!.subSequence(3,13).toString()
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_complete,container,false)
-        initRV()
-        contacts()
+        binding.completedRV.layoutManager = LinearLayoutManager(requireActivity())
+        binding.completedRV.adapter = completedAdapter
+
+        binding.unCompletedRV.layoutManager = LinearLayoutManager(requireActivity())
+        binding.unCompletedRV.adapter = uncompletedAdapter
         return binding.root
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+//        initRV()
+        contacts()
+    }
 
 
     private fun initRV() {
