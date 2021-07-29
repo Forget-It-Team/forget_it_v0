@@ -64,13 +64,16 @@ class MainActivity : AppCompatActivity() {
         adapter.addFragment(SendRemindersFragment(),"")
         adapter.addFragment(UpcomingRemindersFragment(), "")
         adapter.addFragment(PendingRemindersFragment(), "")
+        adapter.addFragment(CompleteFragment(), "")
 
 
         binding.viewPager.adapter = adapter
         binding.tabs.setupWithViewPager(binding.viewPager)
         binding.tabs.getTabAt(0)!!.setIcon(R.drawable.sendicon)
-        binding.tabs.getTabAt(1)!!.setIcon(R.drawable.listicon)
+        binding.tabs.getTabAt(1)!!.setIcon(R.drawable.task)
         binding.tabs.getTabAt(2)!!.setIcon(R.drawable.chooseicon)
+        binding.tabs.getTabAt(3)!!.setIcon(R.drawable.checklist)
+
 
     }
 

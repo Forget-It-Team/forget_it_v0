@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CompleteFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".CompleteFragment"
+    android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Uncompleted tasks"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:layout_marginVertical="5dp"/>
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:cardBackgroundColor="@color/black"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="2dp"
+        android:alpha="0.5"
+        app:cardElevation="0dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Completed tasks"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:layout_marginVertical="5dp"/>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1.5">
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        app:lottie_rawRes="@raw/congrats"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>
 
-</FrameLayout>
+
+
+
+</LinearLayout>
