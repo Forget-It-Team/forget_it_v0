@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CompleteFragment"
     android:orientation="vertical">
     <TextView
@@ -14,10 +15,17 @@
         android:gravity="center"
         android:textSize="18dp"
         android:layout_marginVertical="5dp"/>
-<androidx.recyclerview.widget.RecyclerView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/unCompletedRV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle_background"
+        android:visibility="visible" />
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -34,22 +42,22 @@
         android:gravity="center"
         android:textSize="18dp"
         android:layout_marginVertical="5dp"/>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1.5">
-    <com.airbnb.lottie.LottieAnimationView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:lottie_rawRes="@raw/congrats"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</RelativeLayout>
-
-
+        android:layout_weight="1.5">
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_rawRes="@raw/congrats"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/completedRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
 
 
 </LinearLayout>
+</layout>

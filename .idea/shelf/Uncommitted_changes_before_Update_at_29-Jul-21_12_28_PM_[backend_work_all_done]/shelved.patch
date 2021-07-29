@@ -1,0 +1,30 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.example.android.forget_it_v0\">\r\n\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\r\n    <uses-permission android:name=\"android.permission.READ_CONTACTS\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:largeHeap=\"true\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.ForgetitV0\">\r\n        <activity android:name=\".LoginActivity\"></activity>\r\n        <activity android:name=\".CreateReminderActivity\" />\r\n\r\n        <meta-data\r\n            android:name=\"com.google.firebase.messaging.default_notification_icon\"\r\n            android:resource=\"@drawable/ic_baseline_campaign_24\" />\r\n\r\n        <service\r\n            android:name=\".FirebaseCloudMessaging\"\r\n            android:exported=\"false\"\r\n            android:permission=\"com.google.android.c2dm.permission.SEND\">\r\n            <intent-filter>\r\n                <action android:name=\"com.google.firebase.MESSAGING_EVENT\" />\r\n                <action android:name=\"com.google.android.c2dm.intent.RECEIVE\" />\r\n            </intent-filter>\r\n        </service>\r\n\r\n        <activity android:name=\".ReportActivity\" />\r\n        <activity android:name=\".MainActivity\" />\r\n        <activity android:name=\".AuthenticationActivity\" />\r\n        <activity android:name=\".splashActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n\r\n        <receiver\r\n            android:name=\".models.MyAlarm\"\r\n            android:enabled=\"true\"\r\n            android:exported=\"true\" />\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision ca9dadb6486cf787aab83824260c94726c6d2ebb)
++++ app/src/main/AndroidManifest.xml	(date 1627480951450)
+@@ -31,6 +31,20 @@
+             </intent-filter>
+         </service>
+ 
++        <meta-data
++            android:name="com.google.firebase.messaging.default_notification_icon"
++            android:resource="@drawable/ic_baseline_campaign_24" />
++
++        <service
++            android:name=".FirebaseCloudMessaging"
++            android:exported="false"
++            android:permission="com.google.android.c2dm.permission.SEND">
++            <intent-filter>
++                <action android:name="com.google.firebase.MESSAGING_EVENT" />
++                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
++            </intent-filter>
++        </service>
++
+         <activity android:name=".ReportActivity" />
+         <activity android:name=".MainActivity" />
+         <activity android:name=".AuthenticationActivity" />

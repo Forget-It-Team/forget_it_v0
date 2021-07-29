@@ -1,0 +1,36 @@
+Index: app/src/main/java/com/example/android/forget_it_v0/splashActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.android.forget_it_v0\r\n\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.view.WindowManager\r\nimport android.view.animation.AnimationUtils\r\nimport android.widget.Button\r\nimport androidx.databinding.DataBindingUtil\r\nimport com.example.android.forget_it_v0.databinding.ActivitySplashBinding\r\nimport com.google.firebase.auth.FirebaseAuth\r\n\r\n@Suppress(\"Deprecation\")\r\nclass splashActivity : AppCompatActivity() {\r\n    lateinit var binding: ActivitySplashBinding\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_splash)\r\n        binding = DataBindingUtil.setContentView(this,R.layout.activity_splash)\r\n\r\n        //Animation\r\n        val leftToRight = AnimationUtils.loadAnimation(this,R.anim.left_to_right)\r\n        val RightToLeft = AnimationUtils.loadAnimation(this,R.anim.right_to_left)\r\n        val TopToBottom = AnimationUtils.loadAnimation(this,R.anim.top_to_bottom)\r\n        val BottomToTop = AnimationUtils.loadAnimation(this,R.anim.bottom_to_top)\r\n        binding.logo.setAnimation(TopToBottom)\r\n        binding.logoText.setAnimation(BottomToTop)\r\n\r\n\r\n        // This is used to hide the status bar and make\r\n        // the splash screen as a full screen activity.\r\n        window.setFlags(\r\n            WindowManager.LayoutParams.FLAG_FULLSCREEN,\r\n            WindowManager.LayoutParams.FLAG_FULLSCREEN\r\n        )\r\n        Log.d(\"currentUser\", FirebaseAuth.getInstance().currentUser.phoneNumber)\r\n        // we used the postDelayed(Runnable, time) method\r\n        // to send a message with a delayed time.\r\n        Handler().postDelayed({\r\n            if(FirebaseAuth.getInstance().currentUser == null){\r\n            val intent = Intent(this, LoginActivity::class.java)\r\n                startActivity(intent)\r\n                finish()}\r\n            else{\r\n                val intent = Intent(this, MainActivity::class.java)\r\n                startActivity(intent)\r\n                finish()\r\n            }\r\n\r\n        }, 2500) // 2500 is the delayed time in milliseconds.\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/android/forget_it_v0/splashActivity.kt	(revision ca9dadb6486cf787aab83824260c94726c6d2ebb)
++++ app/src/main/java/com/example/android/forget_it_v0/splashActivity.kt	(date 1627465808561)
+@@ -4,6 +4,7 @@
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+ import android.os.Handler
++import android.util.Log
+ import android.view.WindowManager
+ import android.view.animation.AnimationUtils
+ import android.widget.Button
+@@ -34,7 +35,7 @@
+             WindowManager.LayoutParams.FLAG_FULLSCREEN,
+             WindowManager.LayoutParams.FLAG_FULLSCREEN
+         )
+-        Log.d("currentUser", FirebaseAuth.getInstance().currentUser.phoneNumber)
++        Log.d("currentUser", FirebaseAuth.getInstance().currentUser?.phoneNumber.toString())
+         // we used the postDelayed(Runnable, time) method
+         // to send a message with a delayed time.
+         Handler().postDelayed({
+@@ -43,7 +44,9 @@
+                 startActivity(intent)
+                 finish()}
+             else{
++
+                 val intent = Intent(this, MainActivity::class.java)
++                intent.putExtra("number", FirebaseAuth.getInstance().currentUser.toString().subSequence(3,13))
+                 startActivity(intent)
+                 finish()
+             }
