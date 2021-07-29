@@ -94,14 +94,6 @@ class PendingRemindersFragment : Fragment() , RecyclerViewOnClickPending {
         }
     }
 
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        initSharedPref()
-//        initLayout()
-//        initRV()
-//        contacts()
-//    }
-
     private fun initSharedPref() {
         sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE) ?: return
         alarmCount = sharedPref.getInt("alarmCount", 0)
