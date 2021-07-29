@@ -74,7 +74,7 @@ class CompleteAdapter(var list: ArrayList<Pending>, var listener : RecyclerViewO
     override fun onBindViewHolder(holder: CompleteAdapter.CompleteViewHolder, position: Int) {
         val item = list[position]
         holder.populate(item)
-
+        Log.d("adapter", item.toString())
 
         holder.info.visibility = View.GONE
         holder.btnA.visibility = View.GONE
