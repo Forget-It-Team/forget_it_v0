@@ -66,6 +66,7 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
     private var auth: FirebaseAuth = Firebase.auth
     private var number: String = auth.currentUser!!.phoneNumber.toString().subSequence(3,13).toString()
     private var  phone = auth.currentUser!!.phoneNumber
+    val docRef = Firebase.firestore.collection("Flags").document("re-confirmation")
 
 //    var sampleImages = intArrayOf(
 //        R.drawable.one,
@@ -121,7 +122,6 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
         FirebaseMessaging.getInstance().subscribeToTopic("all")
         val sub_phone = phone!!.subSequence(3, 13)
         FirebaseMessaging.getInstance().subscribeToTopic(sub_phone as String)
-
 
 
         initView()
@@ -501,19 +501,123 @@ class UpcomingRemindersFragment : Fragment(), RecyclerViewOnClick {
         } else {
             if (pending.pastDeadline) {
                 if (v.id == R.id.rv_markDone) {
-                    onYes(pending, position)
+                    docRef.get().addOnSuccessListener {
+                        if (it != null){
+                            Log.d("TAG", it.get("flag").toString())
+                            if(it.get("flag").toString() == "0"){
+                                onYes(pending, position)
+                            }else{
+                                dialogYes(pending, position)
+                            }
+                        }
+                    }
                 } else {
-                    onNo(pending, position)
+                    docRef.get().addOnSuccessListener {
+                        if (it != null){
+                            Log.d("TAG", it.get("flag").toString())
+                            if(it.get("flag").toString() == "0"){
+                                onNo(pending, position)
+                            }else{
+                                dialogNo(pending, position)
+                            }
+                        }
+                    }
                 }
             } else {
                 if (v.id == R.id.rv_markDone) {
-                    onCompleted(pending, position)
+                    docRef.get().addOnSuccessListener {
+                        if (it != null){
+                            Log.d("TAG", it.get("flag").toString())
+                            if(it.get("flag").toString() == "0"){
+                                onCompleted(pending, position)
+                            }else{
+                                dialogCompleted(pending, position)
+                            }
+                        }
+                    }
                 } else {
-                    onDelete(pending, position)
+                    docRef.get().addOnSuccessListener {
+                        if (it != null){
+                            Log.d("TAG", it.get("flag").toString())
+                            if(it.get("flag").toString() == "0"){
+                                onDelete(pending, position)
+                            }else{
+                                dialogDelete(pending, position)
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun dialogYes(pending: Pending, position: Int){
+        val info =  Dialog(requireActivity())
+        info.setContentView(R.layout.dialog_upcoming_deadline)
+        info.show()
+        val yesBtn = info.findViewById<Button>(R.id.deadline_dialog_yes)
+        val noBtn = info.findViewById<Button>(R.id.deadline_dialog_no)
+        yesBtn.setOnClickListener{
+            onYes(pending, position)
+            info.dismiss()
+        }
+        noBtn.setOnClickListener{
+            onNo(pending, position)
+            info.dismiss()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun dialogCompleted(pending: Pending, position: Int){
+        val info =  Dialog(requireActivity())
+        info.setContentView(R.layout.dialog_upcoming_deadline)
+        info.show()
+        val yesBtn = info.findViewById<Button>(R.id.deadline_dialog_yes)
+        val noBtn = info.findViewById<Button>(R.id.deadline_dialog_no)
+        yesBtn.setOnClickListener{
+            onCompleted(pending, position)
+            info.dismiss()
+        }
+        noBtn.setOnClickListener{
+            info.dismiss()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun dialogNo(pending: Pending, position: Int){
+        val info =  Dialog(requireActivity())
+        info.setContentView(R.layout.dialog_upcoming_reminders)
+        info.show()
+        val yesBtn = info.findViewById<Button>(R.id.upcoming_dialog_completed)
+        val noBtn = info.findViewById<Button>(R.id.upcoming_dialog_delete)
+        yesBtn.setOnClickListener{
+            onNo(pending, position)
+            info.dismiss()
+        }
+        noBtn.setOnClickListener{
+            info.dismiss()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun dialogDelete(pending: Pending, position: Int){
+        val info =  Dialog(requireActivity())
+        info.setContentView(R.layout.dialog_upcoming_reminders)
+        info.show()
+        val yesBtn = info.findViewById<Button>(R.id.upcoming_dialog_completed)
+        val noBtn = info.findViewById<Button>(R.id.upcoming_dialog_delete)
+        yesBtn.setOnClickListener{
+            onDelete(pending, position)
+            info.dismiss()
+        }
+        noBtn.setOnClickListener{
+            info.dismiss()
+        }
+    }
+
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onYes(pending: Pending, position: Int) {
