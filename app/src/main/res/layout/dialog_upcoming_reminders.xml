@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select the status of this reminder"
+        android:text="Confirm! You have to Delete?"
         android:textAlignment="center"
         android:textSize="20sp"
         android:id="@+id/upcoming_dialog_text"
@@ -26,14 +26,14 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Completed"
+            android:text="Yes"
             android:backgroundTint="#11aa11"
             android:id="@+id/upcoming_dialog_completed"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete"
+            android:text="No"
             android:layout_marginLeft="10dp"
             android:backgroundTint="#ff0000"
             android:id="@+id/upcoming_dialog_delete"/>
