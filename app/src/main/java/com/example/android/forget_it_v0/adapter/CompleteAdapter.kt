@@ -43,7 +43,7 @@ class CompleteAdapter(var list: ArrayList<Pending>, var listener : RecyclerViewO
             R.drawable.pokthirteen,
         )
         val random = Random
-    
+
         fun populate(pending: Pending) {
             name.text = pending.name
             val reminder = pending.task.split(";").toTypedArray()
@@ -53,8 +53,9 @@ class CompleteAdapter(var list: ArrayList<Pending>, var listener : RecyclerViewO
             task.text = title
             image.setImageResource(personGif[random.nextInt(personGif.size)])
             date.text = pending.date.toString().replace("T", ",").replace("-", "/")
+            Log.d("adapter","populate called")
         }
-    
+
     }
 
     fun update(newList: ArrayList<Pending>) {
@@ -62,14 +63,16 @@ class CompleteAdapter(var list: ArrayList<Pending>, var listener : RecyclerViewO
         list.addAll(newList)
         notifyDataSetChanged()
     }
-    
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompleteAdapter.CompleteViewHolder {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):CompleteViewHolder {
         val inflater = LayoutInflater.from(parent.context).inflate(R.layout.pending_rv, parent, false)
+        Log.d("adapter","on create view Holder called")
         return CompleteViewHolder(inflater)
     }
-    
+
+
     override fun getItemCount(): Int = list.size
-    
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: CompleteAdapter.CompleteViewHolder, position: Int) {
         val item = list[position]

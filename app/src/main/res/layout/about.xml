@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5sp">
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_rawRes="@raw/app"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:alpha="0.1"
+        android:scaleType="center" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="About app"
+        android:textSize="24dp"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:cardBackgroundColor="@color/black"
+        android:layout_marginHorizontal="5dp"
+        android:alpha="0.5"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Forget'it is a simple and effective reminder and task management app which helps create schedules and tasks NOT ONLY for yourself but also for other people in your contact list."
+        android:textSize="14dp"
+        android:layout_marginHorizontal="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="How to use the app"
+        android:textSize="18dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:cardBackgroundColor="@color/black"
+        android:layout_marginHorizontal="5dp"
+        android:alpha="0.5"
+        android:layout_marginBottom="5dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="You can create a reminder with title,desc,date and time.\nYou can send these reminders to any person whose number is saved in your contact list or you can simply set it for yourself.\nAll the reminders sent by others will be displayed in the list of PENDING reminders from there you can choose the reminders you want.\nAs soon as you accept a reminder or set it for yourself it will become available in list of UPCOMING reminders and an alarm will be set on requested date and time.\nYou can also see your completed and uncompleted tasks in the app."
+        android:textSize="14dp"
+        android:layout_marginHorizontal="10dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contact us"
+        android:textSize="18dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:cardBackgroundColor="@color/black"
+        android:layout_marginHorizontal="5dp"
+        android:alpha="0.5"
+        android:layout_marginBottom="5dp"/>
+</LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="icons by icons8.com"
+        android:textSize="10dp"
+        android:gravity="right"
+        android:layout_alignParentBottom="true"/>
+
+
+</RelativeLayout>

@@ -41,46 +41,37 @@ class CompleteFragment : Fragment() , RecyclerViewOnClickPending {
     private lateinit var photo: Bitmap
 
     private val auth = Firebase.auth
-    private var uncompletedAdapter: CompleteAdapter = CompleteAdapter(uncompletedList, this)
-    private var completedAdapter: CompleteAdapter = CompleteAdapter(completedList, this)
+    private lateinit var uncompletedAdapter: CompleteAdapter
+    private lateinit var completedAdapter: CompleteAdapter
     private val phone : String = auth.currentUser!!.phoneNumber!!.subSequence(3,13).toString()
 
-
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_complete,container,false)
-        binding.completedRV.layoutManager = LinearLayoutManager(requireActivity())
-        binding.completedRV.adapter = completedAdapter
-
-        binding.unCompletedRV.layoutManager = LinearLayoutManager(requireActivity())
-        binding.unCompletedRV.adapter = uncompletedAdapter
+        initRV()
+        contacts()
         return binding.root
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        initRV()
-        contacts()
-    }
-
-
     private fun initRV() {
-        completedAdapter = CompleteAdapter(completedList, this)
-        binding.completedRV.layoutManager = LinearLayoutManager(requireActivity())
+        Log.d("CompleteFragment","initRV called")
+        completedAdapter = CompleteAdapter(completedList,this)
+        binding.completedRV.layoutManager = LinearLayoutManager(requireContext())
         binding.completedRV.adapter = completedAdapter
-        uncompletedAdapter = CompleteAdapter(uncompletedList, this)
+
+        uncompletedAdapter = CompleteAdapter(uncompletedList,this)
         binding.unCompletedRV.layoutManager = LinearLayoutManager(requireContext())
-        binding.completedRV.adapter = uncompletedAdapter
+        binding.unCompletedRV.adapter = uncompletedAdapter
     }
 
 
     private fun completed(){
-        Log.i("pending contact", "inside add data")
+        Log.i("CompleteFragment", "completed called")
         var photo: Bitmap = BitmapFactory.decodeResource(
             requireActivity().resources,
             R.drawable.person
@@ -234,6 +225,7 @@ class CompleteFragment : Fragment() , RecyclerViewOnClickPending {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun writeSharedPref() {
+        Log.d("CompleteActivity","writeSharedPref called")
         val sharedPreferences: SharedPreferences =
             requireActivity().getSharedPreferences("pending contact", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences.edit()

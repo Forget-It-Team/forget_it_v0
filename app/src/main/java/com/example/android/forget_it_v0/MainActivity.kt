@@ -4,7 +4,10 @@ import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuInflater
+import android.view.View
 import android.view.WindowManager
+import android.widget.PopupMenu
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
@@ -34,31 +37,62 @@ class MainActivity : AppCompatActivity() {
         auth = Firebase.auth
         number = auth.currentUser!!.phoneNumber.toString()
         binding.imageButton.setOnClickListener {
-            menuButton()
+            showPopup(it)
         }
 
     }
-    private fun menuButton() {
-        val menu_dialog = Dialog(this)
-        menu_dialog.setContentView(R.layout.menu_dialog)
-        menu_dialog.show()
-        menu_dialog.setCanceledOnTouchOutside(false)
-        menu_dialog.setCancelable(false)
-        val sign_out_button = menu_dialog.findViewById<CardView>(R.id.signOutCV)
-        val report_issue_button = menu_dialog.findViewById<CardView>(R.id.reportIssueCV)
-        sign_out_button.setOnClickListener {
-            AuthUI.getInstance()
+//    private fun menuButton() {
+//        val menu_dialog = Dialog(this)
+//        menu_dialog.setContentView(R.layout.menu_dialog)
+//        menu_dialog.show()
+//        menu_dialog.setCanceledOnTouchOutside(false)
+//        menu_dialog.setCancelable(false)
+//        val sign_out_button = menu_dialog.findViewById<CardView>(R.id.signOutCV)
+//        val report_issue_button = menu_dialog.findViewById<CardView>(R.id.reportIssueCV)
+//        sign_out_button.setOnClickListener {
+//            AuthUI.getInstance()
+//                .signOut(this)
+//                .addOnCompleteListener { // user is now signed out
+//                    startActivity(Intent(this, LoginActivity::class.java))
+//                }
+//            report_issue_button.setOnClickListener{
+//                val intent = Intent(this , ReportActivity::class.java)
+//                intent.putExtra("number", number)
+//                startActivity(intent)
+//            }
+//        }
+//    }
+fun showPopup(v : View){
+    val popup = PopupMenu(this, v)
+    val inflater: MenuInflater = popup.menuInflater
+    inflater.inflate(R.menu.items, popup.menu)
+    popup.setOnMenuItemClickListener { menuItem ->
+        when(menuItem.itemId){
+            R.id.sign_out-> {
+                AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener { // user is now signed out
-                    startActivity(Intent(this, LoginActivity::class.java))
-                }
-            report_issue_button.setOnClickListener{
+                    startActivity(Intent(this, LoginActivity::class.java))}
+            }
+
+            R.id.about-> {
+                val menu_dialog = Dialog(this)
+        menu_dialog.setContentView(R.layout.about)
+        menu_dialog.show()
+
+
+            }
+            R.id.report_issue-> {
                 val intent = Intent(this , ReportActivity::class.java)
                 intent.putExtra("number", number)
                 startActivity(intent)
+
             }
         }
+        true
     }
+    popup.show()
+}
     private fun setUpTabs() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(SendRemindersFragment(),"")
@@ -70,9 +104,9 @@ class MainActivity : AppCompatActivity() {
         binding.viewPager.adapter = adapter
         binding.tabs.setupWithViewPager(binding.viewPager)
         binding.tabs.getTabAt(0)!!.setIcon(R.drawable.sendicon)
-        binding.tabs.getTabAt(1)!!.setIcon(R.drawable.listicon)
+        binding.tabs.getTabAt(1)!!.setIcon(R.drawable.task)
         binding.tabs.getTabAt(2)!!.setIcon(R.drawable.chooseicon)
-        binding.tabs.getTabAt(3)!!.setIcon(R.drawable.chooseicon)
+        binding.tabs.getTabAt(3)!!.setIcon(R.drawable.checklist)
     }
 
 
