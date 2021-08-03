@@ -55,7 +55,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="You can create a reminder with title,desc,date and time.\nYou can send these reminders to any person whose number is saved in your contact list or you can simply set it for yourself.\nAll the reminders sent by others will be displayed in the list of PENDING reminders from there you can choose the reminders you want.\nAs soon as you accept a reminder or set it for yourself it will become available in list of UPCOMING reminders and an alarm will be set on requested date and time.\nYou can also see your completed and uncompleted tasks in the app."
+        android:text="Create reminders along with its title, description, date and time!\nYou can send these reminders to any person whose number is saved in your contact list, or you can set it for yourself.\nAll the reminders sent by others will be displayed in the list of PENDING reminders; you can choose the reminders you want from there too.\nAs soon as you accept a reminder or set it for yourself, it will become available in the list of UPCOMING reminders, and an alarm will be set on the corresponding date and time.\nYou can also see your completed and uncompleted tasks in the app."
         android:textSize="14dp"
         android:layout_marginHorizontal="10dp"/>
     <TextView
@@ -72,6 +72,13 @@
         android:layout_marginHorizontal="5dp"
         android:alpha="0.5"
         android:layout_marginBottom="5dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="forget.it.help@gmail.com"
+        android:textSize="14dp"
+        android:id="@+id/gmailTV"
+        android:layout_marginHorizontal="10dp"/>
 </LinearLayout>
 
     <TextView
